@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.core import serializers
 
-from api.models import GameData, Item, Creature, Player
+from api.models import CombatList, GameData, Item, Creature, Player
 
 from .settings import *
 # Create your views here.
@@ -54,11 +54,12 @@ def JsonModelResponse(list):
     return JsonResponse([item.serialize() for item in list], safe=False)
 
 def draft(request): # list
-    tier = request.GET.get('tier', 1)
-    return JsonModelResponse(get_option_list(tier))
+    request.user.player.update_store_list()
+    return JsonModelResponse(request.user.player.data.store_list.all())
 
-def buy(request): # gold
-    pass
+def buy(request, id): # gold
+    item = request.user.player.buy(id)
+    return JsonResponse(request.user.player.serialize())
 
 def sell(request): # gold
     pass
@@ -94,16 +95,17 @@ def calc_combat():
 # Get Data
 
 def creature(request):
-    list = Creature.objects.all()
-    return JsonResponse([item.serialize() for item in list], safe=False)
+    return JsonModelResponse(Creature.objects.all())
 
 def gamedata(request):
-    list = GameData.objects.all()
-    return JsonResponse([item.serialize() for item in list], safe=False)
+    return JsonModelResponse(GameData.objects.all())
 
 def item(request):
-    list = Item.objects.all()
-    return JsonResponse([item.serialize() for item in list], safe=False)
+    return JsonModelResponse(Item.objects.all())
+
+def enemy(request):
+    return JsonModelResponse(CombatList.objects.all())
+
 
 def player(request):
     setup(request)

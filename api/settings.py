@@ -3,6 +3,9 @@ DRAFT_MAX_SHOW = 5
 START_GOLD = 3
 START_TIER_COST = 5
 
+ITEM_COST = 3
+REROLL_COST = 1
+
 START_CREATURE = {
     "max_health" : 5,
     "defense" : 0,

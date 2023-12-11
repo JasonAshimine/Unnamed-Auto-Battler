@@ -31,6 +31,14 @@ combat
     deteministic combat
 '''
 
+def get_option_list(tier):
+    items = list(Item.objects.filter(tier__lte=tier))
+
+    if len(items) < DRAFT_MAX_SHOW:
+        return items
+    return random.sample(items, DRAFT_MAX_SHOW)
+
+
 class UpdateMixin:
     def update(self, **kwargs):
         for name, value in kwargs.items():
@@ -41,6 +49,25 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     # data<GameData> (1)
     # creature<Creature> (1)
+
+    def buy(self, id):
+        item = self.data.buy(id)
+        self.creature.add(item)
+        self.save_all()
+        return item
+        
+
+    def update_store_list(self):
+        self.data.store_list.set(get_option_list(self.data.tier))
+        pass
+
+    def reset(self):
+        self.data.reset()
+        self.creature.reset()
+
+    def save_all(self):
+        self.data.save()
+        self.creature.save()
 
     def __str__(self):
         return self.name
@@ -68,6 +95,7 @@ class Item(models.Model):
 
     def serialize(self):
         return {
+            "id":self.id,
             "name": self.name,
             "tier": self.tier,
             "type": self.type,
@@ -89,17 +117,22 @@ class GameData(UpdateMixin, models.Model):
 
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="data")
 
+    def buy(self, id):
+        if self.gold < ITEM_COST:
+            raise ValueError
+        self.gold -= ITEM_COST
+        
+        return self.remove_item(id)
+    
+    def remove_item(self, id):
+        item = self.store_list.get(pk=id)
+        self.store_list.remove(item)
+
+        return item
+
     def reset(self):
         self.update(**START_GAME_DATA)
         self.store_list.clear()
-
-    def update(self,*args, **kwargs):
-            for name,values in kwargs.items():
-                try:
-                    setattr(self,name,values)
-                except KeyError:
-                    pass
-            self.save()
     
     def serialize(self):
         return {
@@ -124,6 +157,9 @@ class Creature(UpdateMixin, models.Model):
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="creature")
     items = models.ManyToManyField(Item, blank=True, related_name="creatures")
 
+    def add(self, item):
+        self.items.add(item)
+
     def reset(self):
         self.update(**START_CREATURE)
         self.items.clear()
@@ -141,4 +177,4 @@ class CombatList(models.Model):
     creature = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="combat_list")
 
     def serialize(self):
-        return [creature.serialize() for creature in CombatList.objects.all()]
+        return self.creature.serialize()
