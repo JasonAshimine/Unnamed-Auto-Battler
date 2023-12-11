@@ -100,7 +100,7 @@ class GameData(models.Model):
             "tier": self.tier,
             "tier_cost": self.tier_cost,
             "gold": self.gold,
-            "store_list": [item.serialize() for item in self.store_list]
+            "store_list": [item.serialize() for item in self.store_list.all()]
         }
     
 
@@ -121,7 +121,7 @@ class Creature(models.Model):
             "health": self.max_health,
             "defense": self.defense,
             "attack": self.attack,
-            "items": [item.serialize() for item in self.items]
+            "items": [item.serialize() for item in self.items.all()]
         }
 
 class CombatList(models.Model):

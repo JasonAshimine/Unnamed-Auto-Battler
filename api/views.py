@@ -91,10 +91,23 @@ def calc_combat():
 # ---------------------------------------
 # Get Data
 
+def creature(request):
+    list = Creature.objects.all()
+    return JsonResponse([item.serialize() for item in list], safe=False)
+
+def gamedata(request):
+    list = GameData.objects.all()
+    return JsonResponse([item.serialize() for item in list], safe=False)
+
+def item(request):
+    list = Item.objects.all()
+    return JsonResponse([item.serialize() for item in list], safe=False)
+
 def player(request):
     setup(request)
 
-    return JsonResponse(request.user.player.serialize())
+    list = Player.objects.all()
+    return JsonResponse([item.serialize() for item in list], safe=False)
 
 
 def setup(request):
@@ -105,4 +118,9 @@ def setup(request):
 def create_player(user):
     player = Player.objects.create(name=user.username)
     Creature.objects.create(player=player, **START_CREATURE)
-    GameData.objects.create(player=player, **START_GAME_DATA)
+    data = GameData.objects.create(player=player,**START_GAME_DATA)
+    
+    user.player = player
+    user.save()
+
+    data.store_list.set(get_option_list(1))
