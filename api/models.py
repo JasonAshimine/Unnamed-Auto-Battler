@@ -1,7 +1,7 @@
 import random
 from django.db import models
 
-from api.settings import DRAFT_MAX_SHOW, START_GOLD, START_TIER_COST
+from .settings import *
 
 # Create your models here.
 '''
@@ -30,6 +30,12 @@ combat
     calc combat 
     deteministic combat
 '''
+
+class UpdateMixin:
+    def update(self, **kwargs):
+        for name, value in kwargs.items():
+            setattr(self, name, value)
+        self.save()
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
@@ -71,7 +77,7 @@ class Item(models.Model):
     def __str__(self):
         return f"[{self.tier}] {self.name} : {self.type} {self.value}"
 
-class GameData(models.Model):
+class GameData(UpdateMixin, models.Model):
     wins = models.PositiveSmallIntegerField(default=0)
     loss = models.PositiveSmallIntegerField(default=0)
     round = models.PositiveSmallIntegerField(default=0)
@@ -84,13 +90,16 @@ class GameData(models.Model):
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="data")
 
     def reset(self):
-        self.wins = 0
-        self.loss = 0
-        self.round = 0
-        self.tier = 1
-        self.tier_cost = START_TIER_COST
-        self.gold = START_GOLD
+        self.update(**START_GAME_DATA)
         self.store_list.clear()
+
+    def update(self,*args, **kwargs):
+            for name,values in kwargs.items():
+                try:
+                    setattr(self,name,values)
+                except KeyError:
+                    pass
+            self.save()
     
     def serialize(self):
         return {
@@ -106,7 +115,7 @@ class GameData(models.Model):
 
 
 
-class Creature(models.Model):
+class Creature(UpdateMixin, models.Model):
     name = models.CharField(max_length=100)
     max_health = models.PositiveSmallIntegerField()
     defense = models.SmallIntegerField()
@@ -114,6 +123,10 @@ class Creature(models.Model):
 
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="creature")
     items = models.ManyToManyField(Item, blank=True, related_name="creatures")
+
+    def reset(self):
+        self.update(**START_CREATURE)
+        self.items.clear()
 
     def serialize(self):
         return {

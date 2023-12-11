@@ -42,8 +42,10 @@ TODO create items
 TODO 
 '''
 
-def reset(request):
-    pass
+def reset(player):
+    player.creature.reset()
+    player.data.reset()
+
 
 # ---------------------------------------
 # draft 
@@ -105,9 +107,7 @@ def item(request):
 
 def player(request):
     setup(request)
-
-    list = Player.objects.all()
-    return JsonResponse([item.serialize() for item in list], safe=False)
+    return JsonResponse(request.user.player.serialize())
 
 
 def setup(request):
