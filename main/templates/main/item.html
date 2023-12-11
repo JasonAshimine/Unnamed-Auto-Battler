@@ -1,0 +1,23 @@
+
+<div class="col-md-3 col-sm-6" name="item" data-id="{{item.id}}">
+    <div class="card" >
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <span class="badge badge-primary" name="tier">{{item.tier}}</span>
+                <span name="name">{{item.name}}</span>
+                
+            </div>
+            
+            <div>
+                {% if buy %}
+                <button class="btn btn-primary btn-sm" name="buy" data-id="{{item.id}}">Buy</button>
+                {% endif %}
+                <span name="count">{{item.count}}</span>
+            </div>            
+        </div>
+        <div class="card-body">
+            <span name="type">{{item.type}}</span>
+            <span name="value">{{item.value}}</span>
+        </div>
+    </div>
+</div>

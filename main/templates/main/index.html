@@ -1,5 +1,17 @@
 {% extends "main/layout.html" %}
 
 {% block body %}
-    <h2>Hello</h2>
+<div id="error" class="alert alert-danger hidden"></div>
+
+<div id="data">
+    {% include 'main/data.html' %}
+</div>
+<div id="creature">
+    {% include 'main/creature.html' %}
+</div>
+
+
+<template id="item">
+    {% include 'main/item.html' with buy=True%}
+</template>
 {% endblock %}

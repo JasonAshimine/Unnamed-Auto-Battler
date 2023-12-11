@@ -3,14 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Auctions{% endblock %}</title>
+        <title>{% block title %}Game{% endblock %}</title>
+        <script src="{% static 'main/script.js' %}"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'main/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
+        <div class="container">
+        <h1>Game</h1>
         <div>
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% else %}
                 Not signed in.
@@ -38,7 +40,9 @@
             {% endif %}
         </ul>
         <hr>
-        {% block body %}
-        {% endblock %}
+        
+            {% block body %}
+            {% endblock %}
+        </div>        
     </body>
 </html>

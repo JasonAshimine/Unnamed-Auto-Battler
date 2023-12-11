@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from api.models import Player, Creature, Item, GameData, CombatList
+from api.models import CreatureItemCount, Player, Creature, Item, GameData, CombatList
 
 
 # --------------------------------------
@@ -8,6 +8,7 @@ from api.models import Player, Creature, Item, GameData, CombatList
 
 class ItemInline(admin.TabularInline):
     model = Creature.items.through
+    fields = ['item', 'count']
     extra = 0
 
 class CreatureAdmin(admin.ModelAdmin):

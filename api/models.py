@@ -31,7 +31,7 @@ combat
     deteministic combat
 '''
 
-def get_option_list(tier):
+def get_draft_list(tier):
     items = list(Item.objects.filter(tier__lte=tier))
 
     if len(items) < DRAFT_MAX_SHOW:
@@ -50,16 +50,17 @@ class Player(models.Model):
     # data<GameData> (1)
     # creature<Creature> (1)
 
-    def buy(self, id):
-        item = self.data.buy(id)
+    def buyTier(self):
+        self.data.buyTier()
+
+    def buyItem(self, id):
+        item = self.data.buyItem(id)
         self.creature.add(item)
         self.save_all()
         return item
         
-
-    def update_store_list(self):
-        self.data.store_list.set(get_option_list(self.data.tier))
-        pass
+    def reroll(self):
+        self.data.reroll()
 
     def reset(self):
         self.data.reset()
@@ -117,13 +118,32 @@ class GameData(UpdateMixin, models.Model):
 
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="data")
 
-    def buy(self, id):
-        if self.gold < ITEM_COST:
-            raise ValueError
-        self.gold -= ITEM_COST
-        
+    def buyTier(self):
+        if self.tier >= MAX_TIER:
+            raise OverflowError
+
+        self.spend(self.tier_cost)
+        self.tier += 1
+        self.tier_cost = START_TIER_COST + self.tier
+        self.save()
+
+    def buyItem(self, id):
+        self.spend(ITEM_COST)        
         return self.remove_item(id)
     
+    def reroll(self):
+        self.spend(REROLL_COST)
+        self.update_store_list()
+        self.save()
+
+    def spend(self, cost):
+        if self.gold < cost:
+            raise ValueError
+        self.gold -= cost
+    
+    def update_store_list(self):
+        self.store_list.set(get_draft_list(self.tier))
+
     def remove_item(self, id):
         item = self.store_list.get(pk=id)
         self.store_list.remove(item)
@@ -155,10 +175,13 @@ class Creature(UpdateMixin, models.Model):
     attack = models.SmallIntegerField()
 
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="creature")
-    items = models.ManyToManyField(Item, blank=True, related_name="creatures")
+    items = models.ManyToManyField(Item, blank=True, through='CreatureItemCount')
 
     def add(self, item):
-        self.items.add(item)
+        obj, created = CreatureItemCount.objects.get_or_create(creature=self, item=item)
+        if not created:
+            obj.count += 1
+            obj.save()
 
     def reset(self):
         self.update(**START_CREATURE)
@@ -170,7 +193,18 @@ class Creature(UpdateMixin, models.Model):
             "health": self.max_health,
             "defense": self.defense,
             "attack": self.attack,
-            "items": [item.serialize() for item in self.items.all()]
+            "items": [item.serialize() for item in self.counts.order_by('item__tier', 'item__type', 'item__name').all()]
+        }
+    
+class CreatureItemCount(models.Model):
+    creature = models.ForeignKey(Creature, on_delete=models.CASCADE, related_name='counts')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    count = models.SmallIntegerField(default=1)
+
+    def serialize(self):
+        return {
+            **self.item.serialize(),
+            "count": self.count
         }
 
 class CombatList(models.Model):

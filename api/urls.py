@@ -5,7 +5,9 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path("draft/", views.draft, name='draft'),
 
-    path("buy/<int:id>", views.buy, name='buy'),
+    path("buy/", views.buy, name='buy'),
+    path("buy_tier/", views.buy_tier, name='buy_tier'),
+    path("reroll/", views.reroll, name='reroll'),
     # Info
     path("player/", views.player, name='player'),
     path("creature/", views.creature, name='creature'),

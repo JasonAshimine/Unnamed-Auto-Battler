@@ -1,0 +1,11 @@
+<div class="data card">
+    <div class="card-body">
+        <h5 class="card-title" name="name">{{creature.name}}</h5>
+    </div>
+</div>
+
+<div class="list row" name="items">
+    {% for item in creature.items %}
+        {% include 'main/item.html' with item=item %}
+    {% endfor %}
+</div>

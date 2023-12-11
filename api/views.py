@@ -1,7 +1,10 @@
+import json
 import random
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from api.models import CombatList, GameData, Item, Creature, Player
 
@@ -42,13 +45,29 @@ TODO create items
 TODO 
 '''
 
+def handle_buy_error(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return JsonResponse({"error":"Not Enough Gold"}, status=400)
+        except Item.DoesNotExist:
+            return JsonResponse({"error":"Item does not exist"}, status=400)
+        except OverflowError:
+            return JsonResponse({"error":"Tier maxed"}, status=400)
+    return wrapper
+
 def reset(player):
     player.creature.reset()
     player.data.reset()
 
 
+
 # ---------------------------------------
 # draft 
+
+def JsonUserResponse(request):
+    return JsonResponse(request.user.player.serialize())
 
 def JsonModelResponse(list):
     return JsonResponse([item.serialize() for item in list], safe=False)
@@ -57,15 +76,35 @@ def draft(request): # list
     request.user.player.update_store_list()
     return JsonModelResponse(request.user.player.data.store_list.all())
 
-def buy(request, id): # gold
-    item = request.user.player.buy(id)
-    return JsonResponse(request.user.player.serialize())
+@login_required
+@require_POST
+@handle_buy_error
+def buy(request): # gold
+    data = json.loads(request.body)
 
+    request.user.player.buyItem(data['id'])
+    return JsonUserResponse(request)
+
+@login_required
+@require_POST
+@handle_buy_error
+def buy_tier(request):
+    request.user.player.buyTier()
+    return JsonUserResponse(request)
+
+
+@login_required
+@require_POST
 def sell(request): # gold
     pass
 
+@login_required
+@require_POST
+@handle_buy_error
 def reroll(request): # list
-    pass
+    request.user.player.reroll()
+    return JsonUserResponse(request)
+
 
 
 def get_option_list(tier):
