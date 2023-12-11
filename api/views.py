@@ -15,34 +15,28 @@ from .settings import *
 '''
 game
  charecter
-   modifiers
-   win/loss
-   tier?
-   round
-   gold
+   TODO modifiers
+   TODO win/loss
+   DONE tier
+   TODO round
+   DONE gold
 
    
 draft
-    buy
-    sell
-    reroll
-    list of options
+    DONE buy
+    TODO sell
+    DONE reroll
+    DONE list of options
 
 server
-    round[charecters]
-    update with last opponent or winner?
+    TODO round[charecters]
+    TODO update with last opponent or winner?
 
-    getOpponent
+    TODO getOpponent
 
 combat
-    calc combat 
-    deteministic combat
-
-TODO create simple user data
-TODO buy/sell
-TODO List: reroll
-TODO create items
-TODO 
+    TODO calc combat 
+    TODO deteministic combat
 '''
 
 def handle_buy_error(func):
@@ -60,8 +54,6 @@ def handle_buy_error(func):
 def reset(player):
     player.creature.reset()
     player.data.reset()
-
-
 
 # ---------------------------------------
 # draft 
@@ -95,24 +87,15 @@ def buy_tier(request):
 
 @login_required
 @require_POST
-def sell(request): # gold
+def sell(request): # TODO
     pass
 
 @login_required
 @require_POST
 @handle_buy_error
-def reroll(request): # list
+def reroll(request):
     request.user.player.reroll()
     return JsonUserResponse(request)
-
-
-
-def get_option_list(tier):
-    items = list(Item.objects.filter(tier__lte=tier))
-
-    if len(items) < DRAFT_MAX_SHOW:
-        return items
-    return random.sample(items, DRAFT_MAX_SHOW)
 
 # ---------------------------------------
 # Server
@@ -145,6 +128,8 @@ def item(request):
 def enemy(request):
     return JsonModelResponse(CombatList.objects.all())
 
+# ---------------------------------------
+# Player Setup
 
 def player(request):
     setup(request)

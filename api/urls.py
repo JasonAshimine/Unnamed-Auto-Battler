@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path("draft/", views.draft, name='draft'),
 
     path("buy/", views.buy, name='buy'),
     path("buy_tier/", views.buy_tier, name='buy_tier'),

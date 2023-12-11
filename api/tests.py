@@ -31,3 +31,5 @@ class TestDraft(TestCase):
 
         self.assertEqual(len(data), DRAFT_MAX_SHOW)
         self.assertEqual(len(list(filter(lambda o: o['tier'] <= tier, data))), DRAFT_MAX_SHOW)
+
+
