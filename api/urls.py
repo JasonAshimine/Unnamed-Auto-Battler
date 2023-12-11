@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path("draft/", views.draft, name='draft')
+    path("draft/", views.draft, name='draft'),
+    path("player/", views.player, name='player')
 ]

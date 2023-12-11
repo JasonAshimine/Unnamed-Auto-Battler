@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.core import serializers
 
-from api.models import Item, Creature, Player
+from api.models import GameData, Item, Creature, Player
 
 from .settings import *
 # Create your views here.
@@ -85,3 +85,24 @@ def get_opponent(request):
 
 def calc_combat():
     pass
+
+
+
+# ---------------------------------------
+# Get Data
+
+def player(request):
+    setup(request)
+
+    return JsonResponse(request.user.player.serialize())
+
+
+def setup(request):
+    if request.user.player is None:
+        create_player(request.user)
+
+
+def create_player(user):
+    player = Player.objects.create(name=user.username)
+    Creature.objects.create(player=player, **START_CREATURE)
+    GameData.objects.create(player=player, **START_GAME_DATA)
