@@ -81,7 +81,8 @@ class Player(models.Model):
         if item['id'] != id:
             raise Item.DoesNotExist
 
-        self.creature.add(Item.objects.get(pk=id))
+        item = Item.objects.get(pk=id)
+        self.creature.add(item)
         self.save_all()
         return item
         
@@ -164,9 +165,9 @@ class GameData(UpdateMixin, models.Model):
         self.tier_cost = START_TIER_COST + self.tier
         self.save()
 
-    def buyItem(self, id):
+    def buyItem(self, index):
         self.spend(ITEM_COST)        
-        return self.remove_item(id)
+        return self.remove_item(index)
     
     def reroll(self):
         self.spend(REROLL_COST)
@@ -187,7 +188,6 @@ class GameData(UpdateMixin, models.Model):
 
     def reset(self):
         self.update(**START_GAME_DATA)
-        self.store_list = self.update_store_list()
     
     def serialize(self):
         return {
@@ -197,11 +197,9 @@ class GameData(UpdateMixin, models.Model):
             "tier": self.tier,
             "tier_cost": self.tier_cost,
             "gold": self.gold,
-            #"store_list": [item.serialize() for item in self.store_list.all()]
             "store_list": self.store_list
         }
     
-
 # ------------------------------------------------------------------------------
 # Creature
 
