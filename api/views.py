@@ -6,7 +6,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-from api.models import CombatList, GameData, Item, Creature, Player
+from api.models import CombatList, GameData, Item, Creature, Player, get_draft_list, get_extended_items, get_item_by_tier
 
 from .settings import *
 # Create your views here.
@@ -125,14 +125,21 @@ def gamedata(request):
 def item(request):
     return JsonModelResponse(Item.objects.all())
 
+def extended_items(request):
+    return JsonModelResponse(get_draft_list(1))
+
 def enemy(request):
     return JsonModelResponse(CombatList.objects.all())
+
+def opponent(request, tier):
+    return JsonModelResponse(CombatList.get_opponent(tier))
 
 # ---------------------------------------
 # Player Setup
 
 def player(request):
     setup(request)
+    request.user.player.creature.recalc()
     return JsonResponse(request.user.player.serialize())
 
 
@@ -149,4 +156,4 @@ def create_player(user):
     user.player = player
     user.save()
 
-    data.store_list.set(get_option_list(1))
+    data.update_store_list()

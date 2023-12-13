@@ -10,8 +10,9 @@ REROLL_COST = 1
 
 START_CREATURE = {
     "max_health" : 5,
-    "defense" : 0,
-    "attack" : 0
+    "defense" : 1,
+    "attack" : 1,
+    "level" : 0
 }
 
 START_GAME_DATA = {

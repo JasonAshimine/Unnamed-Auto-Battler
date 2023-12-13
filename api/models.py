@@ -1,5 +1,6 @@
 import random
 from django.db import models
+from django.db.models import Max
 
 from .settings import *
 
@@ -31,12 +32,31 @@ combat
     deteministic combat
 '''
 
+def get_item_by_tier(tier = 1):
+    return list(Item.objects.filter(tier__lte=tier))
+
+def num_item_per_tier(tier):
+    return MAX_TIER - tier + 1
+
+def get_extended_items(tier = 1):
+    items = list(get_item_by_tier(tier))
+    extended_items = []
+    for item in items:
+        extended_items.extend([item] *  num_item_per_tier(item.tier))
+
+    return extended_items
+
 def get_draft_list(tier):
-    items = list(Item.objects.filter(tier__lte=tier))
+    items = get_extended_items(tier)
 
     if len(items) < DRAFT_MAX_SHOW:
         return items
     return random.sample(items, DRAFT_MAX_SHOW)
+
+def get_random_item(tier):
+    items = get_extended_items(tier)
+    index = random.randint(0, items.count-1)
+    return items[index]
 
 
 class UpdateMixin:
@@ -44,6 +64,9 @@ class UpdateMixin:
         for name, value in kwargs.items():
             setattr(self, name, value)
         self.save()
+
+# ------------------------------------------------------------------------------
+# Player
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
@@ -78,14 +101,28 @@ class Player(models.Model):
             "name": self.name,
             "data": self.data.serialize(),
             "creature": self.creature.serialize()
-        }    
+        }
+
+# ------------------------------------------------------------------------------
+# Item
+
+class ItemType(models.Model):
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
+
+    def serialize(self):
+        return self.type
+
+    def __str__(self):
+        return self.name
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
     value = models.FloatField()
-    type = models.CharField(max_length=100)
     tier = models.PositiveSmallIntegerField()
     # creatures
+
+    type = models.ForeignKey(ItemType, on_delete=models.CASCADE, related_name="items")
 
     def gen_store_list(self, tier, max = DRAFT_MAX_SHOW):
         items = list(Item.objects.filter(tier__lte=tier))
@@ -99,12 +136,15 @@ class Item(models.Model):
             "id":self.id,
             "name": self.name,
             "tier": self.tier,
-            "type": self.type,
+            "type": self.type.serialize(),
             "value": self.value,
         }
     
     def __str__(self):
-        return f"[{self.tier}] {self.name} : {self.type} {self.value}"
+        return f"[{self.tier}] {self.name} : {self.type} {self.value}"   
+
+# ------------------------------------------------------------------------------
+# Game Data
 
 class GameData(UpdateMixin, models.Model):
     wins = models.PositiveSmallIntegerField(default=0)
@@ -166,22 +206,42 @@ class GameData(UpdateMixin, models.Model):
         }
     
 
-
+# ------------------------------------------------------------------------------
+# Creature
 
 class Creature(UpdateMixin, models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, blank=True)
     max_health = models.PositiveSmallIntegerField()
     defense = models.SmallIntegerField()
     attack = models.SmallIntegerField()
+    level = models.PositiveIntegerField()
 
-    player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="creature")
+    player = models.OneToOneField(Player, on_delete=models.CASCADE, related_name="creature", null=True, blank=True)
     items = models.ManyToManyField(Item, blank=True, through='CreatureItemCount')
+
+    def calc_item(self, item, count=1):
+        id = item.type.type
+        value = getattr(self, id) + count * item.value
+        setattr(self, id, value)
+        self.level += item.tier * count
+
+    def recalc(self):
+        self.update(**START_CREATURE)
+        for data in self.counts.all():
+            self.calc_item(data.item, data.count)
+        self.save()
 
     def add(self, item):
         obj, created = CreatureItemCount.objects.get_or_create(creature=self, item=item)
+        self.calc_item(item)
         if not created:
             obj.count += 1
             obj.save()
+
+    def addRandomItem(self, tier, count = 1):
+        for index in range(count):
+            self.add(get_random_item(tier))
+        self.save()
 
     def reset(self):
         self.update(**START_CREATURE)
@@ -190,6 +250,7 @@ class Creature(UpdateMixin, models.Model):
     def serialize(self):
         return {
             "name": self.name,
+            "level": self.level,
             "health": self.max_health,
             "defense": self.defense,
             "attack": self.attack,
@@ -206,9 +267,22 @@ class CreatureItemCount(models.Model):
             **self.item.serialize(),
             "count": self.count
         }
+    
+# ------------------------------------------------------------------------------
+# Enemy List
 
 class CombatList(models.Model):
-    creature = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="combat_list")
+    creature = models.OneToOneField(Creature, on_delete=models.CASCADE, primary_key=True, related_name="combat_list")
+
+    @staticmethod
+    def get_opponent(rank):
+        combat, created = CombatList.objects.get_or_create(pk=rank)
+
+        creature = combat.creature
+        if created:
+            creature.addRandomItem(rank, rank)
+
+        return creature
 
     def serialize(self):
         return self.creature.serialize()

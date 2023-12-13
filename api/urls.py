@@ -12,5 +12,7 @@ urlpatterns = [
     path("creature/", views.creature, name='creature'),
     path("gamedata/", views.gamedata, name='gamedata'),
     path("enemy/", views.enemy, name='enemy'),
+    path("opponent/<int:tier>", views.opponent, name='opponent'),
     path("item/", views.item, name='item'),
+    path("item/extend", views.extended_items, name='extended_items'),
 ]

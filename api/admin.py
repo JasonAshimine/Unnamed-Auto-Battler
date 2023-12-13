@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from api.models import CreatureItemCount, Player, Creature, Item, GameData, CombatList
+from api.models import CreatureItemCount, ItemType, Player, Creature, Item, GameData, CombatList
 
 
 # --------------------------------------
@@ -37,7 +37,8 @@ class GameDataAdmin(admin.ModelAdmin):
 # Item
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tier', 'type', 'value')
+    list_display = ('name', 'type', 'tier', 'value')
+    fields = ['name', 'tier', 'value', 'type']
     list_filter = ['tier', 'type']
 
 # --------------------------------------
@@ -61,6 +62,7 @@ class PlayerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(ItemType)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(GameData, GameDataAdmin)
 admin.site.register(Creature, CreatureAdmin)
