@@ -13,25 +13,26 @@ class ItemInline(admin.TabularInline):
 
 class CreatureAdmin(admin.ModelAdmin):
     list_display = ['player','name', 'max_health', 'attack', 'defense']
-    fields = ['name', ('max_health', 'attack', 'defense')]
+    #fields = ['name', ('max_health', 'attack', 'defense')]
     inlines = [ItemInline]
 
 
 # --------------------------------------
 # GameData
 
-class DataItemInline(admin.TabularInline):
+'''class DataItemInline(admin.TabularInline):
     model = GameData.store_list.through
-    extra = 0
+    extra = 0'''
 
 
 class GameDataAdmin(admin.ModelAdmin):
     list_display = ('player','round', 'tier')
     fields = [
         ('round','wins', 'loss'),
-        ('gold', 'tier', 'tier_cost')
+        ('gold', 'tier', 'tier_cost'),
+        'store_list'
     ]
-    inlines = [DataItemInline]
+    #inlines = [DataItemInline]
 
 # --------------------------------------
 # Item
@@ -53,7 +54,7 @@ class GameDataInline(admin.StackedInline):
     
 class CreatureInline(admin.StackedInline):
     model = Creature
-    fields = ['name', ('max_health', 'attack', 'defense')]
+    fields = ['name', 'level', ('max_health', 'attack', 'defense')]
     show_change_link = True
 
 class PlayerAdmin(admin.ModelAdmin):

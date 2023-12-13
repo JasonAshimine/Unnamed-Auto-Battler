@@ -10,7 +10,7 @@
             
             <div>
                 {% if buy %}
-                <button class="btn btn-primary btn-sm" name="buy" data-id="{{item.id}}">Buy</button>
+                <button class="btn btn-primary btn-sm" name="buy" data-id="{{item.id}}" data-index="{{forloop.counter0}}">Buy</button>
                 {% endif %}
                 <span name="count">{{item.count}}</span>
             </div>            

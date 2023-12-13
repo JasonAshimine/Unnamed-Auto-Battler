@@ -15,7 +15,7 @@ from .settings import *
 '''
 game
  charecter
-   TODO modifiers
+   DONE modifiers
    TODO win/loss
    DONE tier
    TODO round
@@ -24,7 +24,7 @@ game
    
 draft
     DONE buy
-    TODO sell
+    SKIP sell 
     DONE reroll
     DONE list of options
 
@@ -61,6 +61,7 @@ def reset(player):
 def JsonUserResponse(request):
     return JsonResponse(request.user.player.serialize())
 
+
 def JsonModelResponse(list):
     return JsonResponse([item.serialize() for item in list], safe=False)
 
@@ -74,7 +75,7 @@ def draft(request): # list
 def buy(request): # gold
     data = json.loads(request.body)
 
-    request.user.player.buyItem(data['id'])
+    request.user.player.buyItem(data['id'], data['index'])
     return JsonUserResponse(request)
 
 @login_required
@@ -132,7 +133,9 @@ def enemy(request):
     return JsonModelResponse(CombatList.objects.all())
 
 def opponent(request, tier):
-    return JsonModelResponse(CombatList.get_opponent(tier))
+    CombatList.get_opponent(tier)
+
+    return JsonResponse(CombatList.get_opponent(tier).serialize())
 
 # ---------------------------------------
 # Player Setup

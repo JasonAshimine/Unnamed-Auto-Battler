@@ -26,7 +26,8 @@ async function handleTier(){
 
 async function handleBuy(element){
     const data = await fetchHandler('api/buy/', {
-        id: parseInt(element.dataset.id)
+        id: parseInt(element.dataset.id),
+        index: parseInt(element.dataset.index)
     });
 }
 
@@ -119,10 +120,10 @@ function updateCreature(serverData){
 function updateList(list, parent, isBuy){
     parent.innerHTML = '';
 
-    parent.append(...list.map(item => getItemClone(item, isBuy)));    
+    parent.append(...list.map((item, index) => getItemClone(item, isBuy, index)));    
 }
 
-function getItemClone(data, isBuy){
+function getItemClone(data, isBuy, index){
     const element = document.querySelector('template').content.cloneNode(true);
     updateElement(data, element);
     element.querySelectorAll('[data-id]').forEach(e => e.dataset.id = data.id);
@@ -130,6 +131,7 @@ function getItemClone(data, isBuy){
     const button = element.querySelector('button');
     if(isBuy){
         button.dataset.id = data.id;
+        button.dataset.index = index;
     }
     else{
         button.remove();

@@ -55,7 +55,7 @@ def get_draft_list(tier):
 
 def get_random_item(tier):
     items = get_extended_items(tier)
-    index = random.randint(0, items.count-1)
+    index = random.randint(0, len(items)-1)
     return items[index]
 
 
@@ -76,9 +76,12 @@ class Player(models.Model):
     def buyTier(self):
         self.data.buyTier()
 
-    def buyItem(self, id):
-        item = self.data.buyItem(id)
-        self.creature.add(item)
+    def buyItem(self, id, index):
+        item = self.data.buyItem(index)
+        if item['id'] != id:
+            raise Item.DoesNotExist
+
+        self.creature.add(Item.objects.get(pk=id))
         self.save_all()
         return item
         
@@ -124,13 +127,6 @@ class Item(models.Model):
 
     type = models.ForeignKey(ItemType, on_delete=models.CASCADE, related_name="items")
 
-    def gen_store_list(self, tier, max = DRAFT_MAX_SHOW):
-        items = list(Item.objects.filter(tier__lte=tier))
-
-        if len(items) < max:
-            return items
-        return random.sample(items, max)
-
     def serialize(self):
         return {
             "id":self.id,
@@ -154,7 +150,8 @@ class GameData(UpdateMixin, models.Model):
     tier_cost = models.PositiveSmallIntegerField(default=START_TIER_COST)
     gold = models.PositiveSmallIntegerField(default=START_GOLD)
 
-    store_list = models.ManyToManyField(Item, blank=True)
+    #store_list = models.ManyToManyField(Item, blank=True)
+    store_list = models.JSONField(default=list)
 
     player = models.OneToOneField(Player, on_delete=models.CASCADE, primary_key=True, related_name="data")
 
@@ -182,17 +179,15 @@ class GameData(UpdateMixin, models.Model):
         self.gold -= cost
     
     def update_store_list(self):
-        self.store_list.set(get_draft_list(self.tier))
+        list = get_draft_list(self.tier)
+        self.store_list = [item.serialize() for item in list]
 
-    def remove_item(self, id):
-        item = self.store_list.get(pk=id)
-        self.store_list.remove(item)
-
-        return item
+    def remove_item(self, index):
+        return self.store_list.pop(index)
 
     def reset(self):
         self.update(**START_GAME_DATA)
-        self.store_list.clear()
+        self.store_list = self.update_store_list()
     
     def serialize(self):
         return {
@@ -202,7 +197,8 @@ class GameData(UpdateMixin, models.Model):
             "tier": self.tier,
             "tier_cost": self.tier_cost,
             "gold": self.gold,
-            "store_list": [item.serialize() for item in self.store_list.all()]
+            #"store_list": [item.serialize() for item in self.store_list.all()]
+            "store_list": self.store_list
         }
     
 
@@ -272,14 +268,17 @@ class CreatureItemCount(models.Model):
 # Enemy List
 
 class CombatList(models.Model):
-    creature = models.OneToOneField(Creature, on_delete=models.CASCADE, primary_key=True, related_name="combat_list")
+    creature = models.OneToOneField(Creature, on_delete=models.CASCADE, related_name="combat_list", blank=True, null=True)
 
     @staticmethod
     def get_opponent(rank):
         combat, created = CombatList.objects.get_or_create(pk=rank)
-
         creature = combat.creature
-        if created:
+
+        if created or creature == None:
+            creature = Creature.objects.create(combat_list=combat, name=f"Auto {rank}", **START_CREATURE)
+            combat.creature = creature
+            combat.save()
             creature.addRandomItem(rank, rank)
 
         return creature

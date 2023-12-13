@@ -20,7 +20,7 @@
     <div class="card-body">
         <div class="list row" name="store_list">
             {% for item in data.store_list %}
-                {% include 'main/item.html' with item=item buy=True%}
+                {% include 'main/item.html' with item=item buy=True index=forloop.counter%}
             {% endfor %}
         </div>
     </div>
