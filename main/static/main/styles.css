@@ -1,3 +1,118 @@
+.attack-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -32px -160px;
+  background-image: url("img/Icons.png");
+}
+
+.defense-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -32px -192px;
+  background-image: url("img/Icons.png");
+}
+
+.health-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -192px 0px;
+  background-image: url("img/Icons.png");
+}
+
+.gold-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -224px -384px;
+  background-image: url("img/Icons.png");
+}
+
+.win-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: 0px -64px;
+  background-image: url("img/Icons.png");
+}
+
+.loss-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -32px -64px;
+  background-image: url("img/Icons.png");
+}
+
+.tier-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -448px -384px;
+  background-image: url("img/Icons.png");
+}
+
+.cost-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -192px -384px;
+  background-image: url("img/Icons.png");
+}
+
+.reroll-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -416px -416px;
+  background-image: url("img/Icons.png");
+}
+
+.buy-tier-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -128px -64px;
+  background-image: url("img/Icons.png");
+}
+
+.end-draft-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -384px -416px;
+  background-image: url("img/Icons.png");
+}
+
+.sprite-container {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+}
+.sprite-container .progress {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+}
+
 .bat-idle {
   border: 1px solid black;
   width: 64px;
@@ -266,5 +381,6 @@
     background-position-x: -320px;
   }
 }
+@keyframes enemy-attack-move {}
 
 /*# sourceMappingURL=styles.css.map */

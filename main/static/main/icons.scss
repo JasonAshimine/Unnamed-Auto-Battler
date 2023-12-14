@@ -1,0 +1,58 @@
+$icon-url: "img/Icons.png";
+$icon-width: 32px;
+$icon-height: 32px;
+
+@mixin icons($x, $y){
+    border: 1px solid black;
+    width: $icon-width;
+    height: $icon-height;
+    display: inline-block;
+
+    background-position: (-$icon-width * $x) (-$icon-height * $y);
+
+    background-image: url($icon-url);
+}
+
+.attack-icon{
+    @include icons(1, 5);
+}
+
+.defense-icon{
+    @include icons(1, 6);
+}
+
+.health-icon{
+    @include icons(6, 0);
+}
+
+.gold-icon{
+    @include icons(7,12);
+}
+
+.win-icon{
+    @include icons(0,2);
+}
+
+.loss-icon{
+    @include icons(1,2);
+}
+
+.tier-icon{
+    @include icons(14,12);
+}
+
+.cost-icon{
+    @include icons(6,12);
+}
+
+.reroll-icon{
+    @include icons(13,13);
+}
+
+.buy-tier-icon{
+    @include icons(4,2);
+}
+
+.end-draft-icon{
+    @include icons(12,13);
+}

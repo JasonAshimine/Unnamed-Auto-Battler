@@ -1,4 +1,23 @@
+@use 'icons';
 @use 'sass:math';
+
+.sprite-container{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid red;
+
+    .progress{
+        position: absolute;
+        top: 0;
+        left: 15%;
+        width: 70%;
+    }
+}
 
 $sprite-width: 64px;
 $sprite-height: 64px;
@@ -102,8 +121,12 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
     to { background-position-x: -($sprite-width * 5); }
 }
 
-
 @keyframes playSkip {
     from { background-position-x: -64px; }
     to { background-position-x: -320px; }
+}
+
+@keyframes enemy-attack-move {
+    from {}
+    to {}
 }
