@@ -1,42 +1,270 @@
-.hidden:empty{
-    display: none;
+.bat-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: playSkip 0.6s steps(4);
+  animation-iteration-count: infinite;
 }
 
-
-.glow {
-    animation: glow 1s;
+.bat-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-action 0.8s steps(4);
+  animation-iteration-count: 1;
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px -10px #aef4af;
-    }
-    to {
-        box-shadow: 0 0 10px 10px #aef4af;
-    }
+.bat-death {
+  background-position: 0 64px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-action 0.8s steps(4);
+  animation-iteration-count: 1;
 }
 
-
-
-.sprite{
-    vertical-align: middle;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 64px;
-    height: 64px;
+.bones-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bones_SingleSkull_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
 }
 
-.sprite img {
-    width: 64px;
-    height: 64px;
-    object-position: 0 0;
-    object-fit: none;
-    animation: play 0.5s steps(4) infinite;
-    background-color: gray;
-    transform: scale(2);
+.bones-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bones_SingleSkull_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-5 0.8s steps(5);
+  animation-iteration-count: 1;
+}
+
+.bones-death {
+  background-position: 0 128px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Bones_SingleSkull_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.crab-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Crab_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.crab-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Crab_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.crab-death {
+  background-position: 0 64px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Crab_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-5 0.8s steps(5);
+  animation-iteration-count: 1;
+}
+
+.golem-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Golem_Armor_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.golem-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Golem_Armor_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.golem-death {
+  background-position: 0 128px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Golem_Armor_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.pebble-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Pebble_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.pebble-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Pebble_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-5 0.8s steps(5);
+  animation-iteration-count: 1;
+}
+
+.pebble-death {
+  background-position: 0 128px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Pebble_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.rat-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Rat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: playSkip 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.rat-attack {
+  background-position: 0 256px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Rat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-6 0.8s steps(6);
+  animation-iteration-count: 1;
+}
+
+.rat-death {
+  background-position: 0 64px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Rat_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-5 0.8s steps(5);
+  animation-iteration-count: 1;
+}
+
+.slime-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Slime_Spiked_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.slime-attack {
+  background-position: 0 192px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Slime_Spiked_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-action 0.8s steps(4);
+  animation-iteration-count: 1;
+}
+
+.slime-death {
+  background-position: 0 64px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  background-image: url("img/Slime_Spiked_Full.png");
+  transform: scaleX(-1) scale(3);
+  animation: play-action 0.8s steps(4);
+  animation-iteration-count: 1;
+}
+
+.hidden:empty {
+  display: none;
 }
 
 @keyframes play {
-    from { object-position: 0 0; }
-    to { object-position: -256px 0; }
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -256px;
+  }
 }
+@keyframes play-action {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -256px;
+  }
+}
+@keyframes play-6 {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -384px;
+  }
+}
+@keyframes play-5 {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -320px;
+  }
+}
+@keyframes playSkip {
+  from {
+    background-position-x: -64px;
+  }
+  to {
+    background-position-x: -320px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

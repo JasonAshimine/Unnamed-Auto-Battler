@@ -40,10 +40,16 @@
             {% endif %}
         </ul>
         <hr>
-        <div class="sprite" >
-            <img src="{% static 'main/Bat_Fly.png' %}"></img>
+        <script src="{% static 'main/image.js' %}"></script>
+        <div class="row">
+            {% include 'main/image.html' with tag='bat' %}
+            {% include 'main/image.html' with tag='bones' %}
+            {% include 'main/image.html' with tag='crab' %}
+            {% include 'main/image.html' with tag='golem' %}
+            {% include 'main/image.html' with tag='pebble' %}
+            {% include 'main/image.html' with tag='rat' %}
+            {% include 'main/image.html' with tag='slime' %}
         </div>
-            
             {% block body %}
             {% endblock %}
         </div>        
