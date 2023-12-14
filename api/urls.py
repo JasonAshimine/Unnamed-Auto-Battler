@@ -7,6 +7,10 @@ urlpatterns = [
     path("buy/", views.buy, name='buy'),
     path("buy_tier/", views.buy_tier, name='buy_tier'),
     path("reroll/", views.reroll, name='reroll'),
+
+    # test
+    path("combat/", views.combat, name='combat'),
+
     # Info
     path("player/", views.player, name='player'),
     path("creature/", views.creature, name='creature'),

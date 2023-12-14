@@ -1,12 +1,12 @@
 import json
-import random
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from api.script.combat import calc_combat
 
 from api.models import CombatList, GameData, Item, Creature, Player, get_draft_list, get_extended_items, get_item_by_tier
+
+#from api.combat import calc_combat
 
 from .settings import *
 # Create your views here.
@@ -88,7 +88,7 @@ def buy_tier(request):
 
 @login_required
 @require_POST
-def sell(request): # TODO
+def sell(request): # TODO - Skip?
     pass
 
 @login_required
@@ -98,21 +98,38 @@ def reroll(request):
     request.user.player.reroll()
     return JsonUserResponse(request)
 
+
+@login_required
+@require_POST
+def end_draft(request): # TODO - return combat data and update new round & winner/loss
+    pass
+
 # ---------------------------------------
 # Server
 
 def get_opponent(request):
-    pass 
+    round = request.user.player.data.round
+    return CombatList.get_opponent(round)
+
+def end_round(player):
+    pass
+
 
 # handle update list
 
 # ---------------------------------------
 # Combat
 
-def calc_combat():
-    pass
+def combat(request):
+    user = request.user.player.creature
+    enemy = get_opponent(request)
 
+    winner, combat_log = calc_combat(user, enemy)
 
+    return JsonResponse({
+        "winner": winner,
+        "log":combat_log
+        }, safe=False)
 
 # ---------------------------------------
 # Get Data
@@ -133,22 +150,20 @@ def enemy(request):
     return JsonModelResponse(CombatList.objects.all())
 
 def opponent(request, tier):
-    CombatList.get_opponent(tier)
-
     return JsonResponse(CombatList.get_opponent(tier).serialize())
 
 # ---------------------------------------
 # Player Setup
 
 def player(request):
-    setup(request)
+    setup(request.user)
     request.user.player.creature.recalc()
     return JsonResponse(request.user.player.serialize())
 
 
-def setup(request):
-    if request.user.player is None:
-        create_player(request.user)
+def setup(user):
+    if user.player is None:
+        create_player(user)
 
 
 def create_player(user):

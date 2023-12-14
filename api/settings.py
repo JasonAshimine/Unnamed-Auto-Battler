@@ -1,12 +1,30 @@
+
+# -------------------------------------
+# Draft
+
 DRAFT_MAX_SHOW = 5
-
-START_GOLD = 3
-
 MAX_TIER = 6
+
 START_TIER_COST = 5
 
 ITEM_COST = 3
 REROLL_COST = 1
+
+# -------------------------------------
+# Combat
+
+MIN_DAMAGE = 1
+
+COMBAT_START_SCALE = 10
+COMBAT_SCALE_INTERVAL = 5
+COMBAT_SCALE = 2
+
+COMBAT_MAX_ROUND = 50
+
+# -------------------------------------
+# Starting data
+
+START_GOLD = 3
 
 START_CREATURE = {
     "max_health" : 5,
