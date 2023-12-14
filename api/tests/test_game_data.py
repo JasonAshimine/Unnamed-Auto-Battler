@@ -23,7 +23,7 @@ class TestGameData(TestCase):
         data = GameData.objects.first()
         data.gold = ITEM_COST
 
-        data.update_store_list()
+        data.new_store_list()
         expect_item = Item.objects.get(pk= data.store_list[2]['id'])
         item = data.buyItem(2)
 
@@ -75,12 +75,12 @@ class TestGameData(TestCase):
     
     def test_fn_update_store_list(self):
         data = GameData.objects.first()
-        data.update_store_list()
+        data.new_store_list()
         self.assertEqual(len(data.store_list), DRAFT_MAX_SHOW)
 
     def test_fn_remove_item(self):
         data = GameData.objects.first()
-        data.update_store_list()
+        data.new_store_list()
         expect_item = Item.objects.get(pk= data.store_list[2]['id'])
         item = data.remove_item(2)
 

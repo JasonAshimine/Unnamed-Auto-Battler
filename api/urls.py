@@ -7,6 +7,7 @@ urlpatterns = [
     path("buy/", views.buy, name='buy'),
     path("buy_tier/", views.buy_tier, name='buy_tier'),
     path("reroll/", views.reroll, name='reroll'),
+    path("endTurn/", views.end_draft, name="end_turn"),
 
     # test
     path("combat/", views.combat, name='combat'),

@@ -21,7 +21,7 @@ class TestItem(TestCase):
         player = Player.objects.first()
         creature = Creature.objects.first()
 
-        player.data.update_store_list()
+        player.data.new_store_list()
         player.data.gold = ITEM_COST
 
         expect_item = player.data.store_list[2]

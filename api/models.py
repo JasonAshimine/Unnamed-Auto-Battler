@@ -171,7 +171,7 @@ class GameData(UpdateMixin, models.Model):
     
     def reroll(self):
         self.spend(REROLL_COST)
-        self.update_store_list()
+        self.new_store_list()
         self.save()
 
     def spend(self, cost):
@@ -179,7 +179,7 @@ class GameData(UpdateMixin, models.Model):
             raise ValueError
         self.gold -= cost
     
-    def update_store_list(self):
+    def new_store_list(self):
         list = get_draft_list(self.tier)
         self.store_list = [item.serialize() for item in list]
 

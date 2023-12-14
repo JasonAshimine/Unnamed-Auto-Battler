@@ -57,16 +57,30 @@ def reset(player):
 
 # ---------------------------------------
 # draft 
+def get_session_data(request):
+    if request.session.get(SESSION_STATE, None) == STATE_COMBAT:
+        return request.session.get(SESSION_COMBAT_LOG, None)
+    
+    return None
 
-def JsonUserResponse(request):
-    return JsonResponse(request.user.player.serialize())
 
+def JsonUserResponse(request, data = None):
+    user_data = request.user.player.serialize()
+
+    if data:
+        user_data.update(data)
+
+    session_data = request.session.get(SESSION_COMBAT_LOG, None)
+    if session_data:
+        user_data.update(session_data)
+        
+    return JsonResponse(user_data)
 
 def JsonModelResponse(list):
     return JsonResponse([item.serialize() for item in list], safe=False)
 
 def draft(request): # list
-    request.user.player.update_store_list()
+    request.user.player.new_store_list()
     return JsonModelResponse(request.user.player.data.store_list.all())
 
 @login_required
@@ -102,7 +116,40 @@ def reroll(request):
 @login_required
 @require_POST
 def end_draft(request): # TODO - return combat data and update new round & winner/loss
-    pass
+    player = request.user.player
+    opponent = CombatList.get_opponent(player.data.round)
+
+    winner, combat_log = calc_combat(player.creature, opponent)
+    end_update_player(player, winner)
+
+    combat_data = {
+        COMBAT_LOG: combat_log, 
+        WINNER:winner,
+        ENEMY: opponent.serialize()
+    }
+
+
+    request.session[SESSION_STATE] = STATE_COMBAT
+    request.session[SESSION_COMBAT_LOG] = combat_data
+
+    return JsonUserResponse(request)
+
+
+def end_update_player(player, winner):
+    data = player.data
+
+    data.round += 1
+    data.tier_cost = max(MIN_TIER_COST, data.tier_cost - 1)
+    data.gold = min(MAX_GOLD, START_GOLD + data.round)
+    
+
+    if winner is USER:
+        data.wins += 1
+    elif winner is ENEMY:
+        data.loss += 1
+        
+    data.new_store_list()
+    data.save()
 
 # ---------------------------------------
 # Server
@@ -114,9 +161,6 @@ def get_opponent(request):
 def end_round(player):
     pass
 
-
-# handle update list
-
 # ---------------------------------------
 # Combat
 
@@ -127,8 +171,8 @@ def combat(request):
     winner, combat_log = calc_combat(user, enemy)
 
     return JsonResponse({
-        "winner": winner,
-        "log":combat_log
+        WINNER: winner,
+        COMBAT_LOG:combat_log
         }, safe=False)
 
 # ---------------------------------------
@@ -158,7 +202,7 @@ def opponent(request, tier):
 def player(request):
     setup(request.user)
     request.user.player.creature.recalc()
-    return JsonResponse(request.user.player.serialize())
+    return JsonUserResponse(request)
 
 
 def setup(user):
@@ -174,4 +218,4 @@ def create_player(user):
     user.player = player
     user.save()
 
-    data.update_store_list()
+    data.new_store_list()

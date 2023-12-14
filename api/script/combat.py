@@ -75,5 +75,5 @@ def calc_combat_damage(attack, defender, multiplier):
 
 def combat_turn_tag(isUserTurn):
     if isUserTurn:
-        return "user"
-    return "opponent"
+        return USER
+    return ENEMY

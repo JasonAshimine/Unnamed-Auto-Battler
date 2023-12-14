@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
             case 'buy': return handleBuy(event.target);
             case 'reroll': return handleReroll();
             case 'buyTier': return handleTier();
+            case 'endTurn': return hanldeEndTurn();
         }
     });
 });
@@ -19,6 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ------------------------------------------------------
 handlers
 */
+
+async function hanldeEndTurn(){
+    const data = await fetchHandler('api/endTurn/');
+}
 
 async function handleTier(){
     const data = await fetchHandler('api/buy_tier/');
@@ -56,7 +61,7 @@ async function fetchHandler(url = '', data = {}, option = {}){
     }        
 
     updateAll(serverData);
-    console.log(data);
+    console.log(url, "data:", data, "server:",serverData);
     return serverData;
 }
 
