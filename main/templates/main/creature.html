@@ -1,14 +1,5 @@
 <div class="card">
-    <div class="data">
-        <div class="card-body">
-            <h5 class="card-title" name="name">{{creature.name}}</h5>
-        </div>
-        <div>Level: <d name="level">{{creature.level}}</d></div>
-        <div>Health: <d name="health">{{creature.health}}</d></div>
-        <div>Attack: <d name="attack">{{creature.attack}}</d></div>
-        <div>Defense: <d name="defense">{{creature.defense}}</d></div>
-    </div>
-    
+    {% include 'main/creature data.html' %}
     <div class="card-body">
         <div class="list row" name="items">
             {% for item in creature.items %}

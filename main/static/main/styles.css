@@ -6,16 +6,6 @@
 .glow {
     animation: glow 1s;
 }
-  
-@keyframes glow {
-    from {
-      box-shadow: 0 0 10px -10px #aef4af;
-    }
-    to {
-      box-shadow: 0 0 10px 10px #aef4af;
-    }
-}
-
 
 @keyframes glow {
     from {
@@ -24,4 +14,29 @@
     to {
         box-shadow: 0 0 10px 10px #aef4af;
     }
+}
+
+
+
+.sprite{
+    vertical-align: middle;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 64px;
+    height: 64px;
+}
+
+.sprite img {
+    width: 64px;
+    height: 64px;
+    object-position: 0 0;
+    object-fit: none;
+    animation: play 0.5s steps(4) infinite;
+    background-color: gray;
+    transform: scale(2);
+}
+
+@keyframes play {
+    from { object-position: 0 0; }
+    to { object-position: -256px 0; }
 }
