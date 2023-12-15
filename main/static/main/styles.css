@@ -4,6 +4,7 @@
   height: 32px;
   display: inline-block;
   background-position: -32px -160px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -13,6 +14,7 @@
   height: 32px;
   display: inline-block;
   background-position: -32px -192px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -22,6 +24,7 @@
   height: 32px;
   display: inline-block;
   background-position: -192px 0px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -31,6 +34,7 @@
   height: 32px;
   display: inline-block;
   background-position: -224px -384px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -40,6 +44,7 @@
   height: 32px;
   display: inline-block;
   background-position: 0px -64px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -49,6 +54,7 @@
   height: 32px;
   display: inline-block;
   background-position: -32px -64px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -57,7 +63,8 @@
   width: 32px;
   height: 32px;
   display: inline-block;
-  background-position: -448px -384px;
+  background-position: -128px -128px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -67,6 +74,7 @@
   height: 32px;
   display: inline-block;
   background-position: -192px -384px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -76,6 +84,27 @@
   height: 32px;
   display: inline-block;
   background-position: -416px -416px;
+  background-repeat: no-repeat;
+  background-image: url("img/Icons.png");
+}
+
+.round-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -288px -160px;
+  background-repeat: no-repeat;
+  background-image: url("img/Icons.png");
+}
+
+.level-icon {
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-position: -160px -96px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -85,6 +114,7 @@
   height: 32px;
   display: inline-block;
   background-position: -128px -64px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
 }
 
@@ -94,7 +124,12 @@
   height: 32px;
   display: inline-block;
   background-position: -384px -416px;
+  background-repeat: no-repeat;
   background-image: url("img/Icons.png");
+}
+
+.count:not(:empty)::before {
+  content: "x";
 }
 
 .sprite-container {
@@ -118,6 +153,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: playSkip 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -129,6 +165,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
@@ -140,6 +177,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
@@ -150,6 +188,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bones_SingleSkull_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -161,6 +200,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bones_SingleSkull_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
@@ -172,6 +212,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Bones_SingleSkull_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -182,6 +223,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Crab_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -193,6 +235,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Crab_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -204,6 +247,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Crab_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
@@ -214,6 +258,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Golem_Armor_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -225,6 +270,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Golem_Armor_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -236,6 +282,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Golem_Armor_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -246,6 +293,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Pebble_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -257,6 +305,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Pebble_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
@@ -268,6 +317,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Pebble_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -278,6 +328,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Rat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: playSkip 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -289,6 +340,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Rat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
@@ -300,6 +352,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Rat_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
@@ -310,6 +363,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Slime_Spiked_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
@@ -321,6 +375,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Slime_Spiked_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
@@ -332,6 +387,7 @@
   width: 64px;
   height: 64px;
   background-image: url("img/Slime_Spiked_Full.png");
+  background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;

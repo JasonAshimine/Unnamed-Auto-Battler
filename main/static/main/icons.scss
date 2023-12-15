@@ -9,7 +9,7 @@ $icon-height: 32px;
     display: inline-block;
 
     background-position: (-$icon-width * $x) (-$icon-height * $y);
-
+    background-repeat: no-repeat;
     background-image: url($icon-url);
 }
 
@@ -38,7 +38,7 @@ $icon-height: 32px;
 }
 
 .tier-icon{
-    @include icons(14,12);
+    @include icons(4,4);
 }
 
 .cost-icon{
@@ -49,10 +49,18 @@ $icon-height: 32px;
     @include icons(13,13);
 }
 
+.round-icon{
+    @include icons(9, 5);
+}
+
+.level-icon{
+    @include icons(5, 3);
+}
+
 .buy-tier-icon{
-    @include icons(4,2);
+    @include icons(4, 2);
 }
 
 .end-draft-icon{
-    @include icons(12,13);
+    @include icons(12, 13);
 }

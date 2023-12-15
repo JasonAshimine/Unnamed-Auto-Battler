@@ -1,6 +1,11 @@
 @use 'icons';
 @use 'sass:math';
 
+.count:not(:empty)::before{
+    content: "x";
+}
+
+
 .sprite-container{
     width: 200px;
     height: 200px;
@@ -30,6 +35,7 @@ $speed-action: .8s;
     height: $sprite-height;
 
     background-image: url($url);
+    background-repeat: no-repeat;
     transform:  scaleX(-1) scale(3);
 }
 

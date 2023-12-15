@@ -113,9 +113,14 @@ class Player(models.Model):
 class ItemType(models.Model):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
+    icon = models.CharField(max_length=100)
 
     def serialize(self):
-        return self.type
+        return {
+            "name": self.name,
+            "type": self.type,
+            "icon": self.icon
+        }
 
     def __str__(self):
         return self.name

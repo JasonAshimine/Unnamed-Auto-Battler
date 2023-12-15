@@ -2,20 +2,17 @@
 <div class="col-md-3 col-sm-6 p-1" name="item" data-id="{{item.id}}">
     <div class="card" >
         <div class="card-header d-flex justify-content-between">
-            <div>
-               <span name="name">{{item.name}}</span>
+            <div class="d-flex align-content-center">
+                <i class="{{item.type.icon}}" title="{{item.type.name}}"></i>
+                <span class="text-center p-1" name="name">{{item.name}}</span>
             </div>
             
             <div>
                 {% if buy %}
                 <button class="btn btn-primary btn-sm" name="buy" data-id="{{item.id}}" data-index="{{forloop.counter0}}">Buy</button>
                 {% endif %}
-                <span name="count">{{item.count}}</span>
+                <span name="count" class="count p1">{{item.count}}</span>
             </div>            
-        </div>
-        <div class="card-body">
-            <span name="type">{{item.type}}</span>
-            <span name="value">{{item.value}}</span>
         </div>
     </div>
 </div>

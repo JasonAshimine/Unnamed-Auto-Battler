@@ -128,14 +128,18 @@ function updateList(list, parent, isBuy){
     parent.append(...list.map((item, index) => getItemClone(item, isBuy, index)));    
 }
 
-function getItemClone(data, isBuy, index){
+function getItemClone(item, isBuy, index){
     const element = document.querySelector('template').content.cloneNode(true);
-    updateElement(data, element);
-    element.querySelectorAll('[data-id]').forEach(e => e.dataset.id = data.id);
+    updateElement(item, element);
+    element.querySelectorAll('[data-id]').forEach(e => e.dataset.id = item.id);
+    element.querySelectorAll('i').forEach(e => {
+        e.setAttribute("class", item.type.icon);
+        e.setAttribute("title", item.type.name);
+    });
 
     const button = element.querySelector('button');
     if(isBuy){
-        button.dataset.id = data.id;
+        button.dataset.id = item.id;
         button.dataset.index = index;
     }
     else{
