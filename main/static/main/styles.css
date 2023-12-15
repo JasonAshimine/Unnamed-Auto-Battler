@@ -139,13 +139,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
 }
 .sprite-container .progress {
   position: absolute;
   top: 0;
   left: 15%;
   width: 70%;
+}
+.sprite-container .stats {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+.sprite-container .stats div {
+  display: flex;
+  align-items: center;
+}
+
+.sprite-container.user .stats {
+  left: 0;
+}
+
+.sprite-container.enemy .stats {
+  right: 0;
 }
 
 .bat-idle {
@@ -160,7 +178,7 @@
 }
 
 .bat-attack {
-  background-position: 0 192px;
+  background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -172,7 +190,7 @@
 }
 
 .bat-death {
-  background-position: 0 64px;
+  background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -195,19 +213,19 @@
 }
 
 .bones-attack {
-  background-position: 0 192px;
+  background-position-y: -64px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
-  animation: play-5 0.8s steps(5);
+  animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
 
 .bones-death {
-  background-position: 0 128px;
+  background-position-y: -192px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -230,7 +248,7 @@
 }
 
 .crab-attack {
-  background-position: 0 192px;
+  background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -242,7 +260,7 @@
 }
 
 .crab-death {
-  background-position: 0 64px;
+  background-position-y: -384px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -265,7 +283,7 @@
 }
 
 .golem-attack {
-  background-position: 0 192px;
+  background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -277,7 +295,7 @@
 }
 
 .golem-death {
-  background-position: 0 128px;
+  background-position-y: -320px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -300,7 +318,7 @@
 }
 
 .pebble-attack {
-  background-position: 0 192px;
+  background-position-y: -64px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -312,7 +330,7 @@
 }
 
 .pebble-death {
-  background-position: 0 128px;
+  background-position-y: -192px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -335,7 +353,7 @@
 }
 
 .rat-attack {
-  background-position: 0 256px;
+  background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -347,7 +365,7 @@
 }
 
 .rat-death {
-  background-position: 0 64px;
+  background-position-y: -320px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -370,19 +388,19 @@
 }
 
 .slime-attack {
-  background-position: 0 192px;
+  background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
   transform: scaleX(-1) scale(3);
-  animation: play-action 0.8s steps(4);
+  animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
 
 .slime-death {
-  background-position: 0 64px;
+  background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -437,6 +455,5 @@
     background-position-x: -320px;
   }
 }
-@keyframes enemy-attack-move {}
 
 /*# sourceMappingURL=styles.css.map */

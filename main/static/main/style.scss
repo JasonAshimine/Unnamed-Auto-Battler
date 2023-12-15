@@ -14,13 +14,36 @@
     justify-content: center;
     align-items: center;
 
-    border: 1px solid red;
-
     .progress{
         position: absolute;
         top: 0;
         left: 15%;
         width: 70%;
+    }
+
+    .stats{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+
+        div{
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
+.sprite-container.user{
+    .stats{
+        left: 0;
+    }
+}
+
+.sprite-container.enemy{
+    .stats{
+        right: 0;
     }
 }
 
@@ -63,7 +86,7 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
 
 @mixin createSprite($name, $url, $offset: 0, $anim:play-action, $steps:4){
     .#{$name}{
-        background-position: 0 ($offset * $sprite-height );
+        background-position-y: -($offset * $sprite-height);
         @include sprite-action($url, $anim, $steps);
     }
 }
@@ -76,32 +99,32 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
 
 
 @include createIdle("bat-idle",  $bat-url, playSkip);
-@include createSprite("bat-attack",$bat-url, 3);
-@include createSprite("bat-death", $bat-url, 1);
+@include createSprite("bat-attack",$bat-url, 2);
+@include createSprite("bat-death", $bat-url, 4);
 
 @include createIdle("bones-idle",  $bones-url);
-@include createSprite("bones-attack",$bones-url, 3, play-5, 5);
-@include createSprite("bones-death", $bones-url, 2, play-6, 6);
+@include createSprite("bones-attack",$bones-url, 1, play-6, 6);
+@include createSprite("bones-death", $bones-url, 3, play-6, 6);
 
 @include createIdle("crab-idle",  $crab-url);
-@include createSprite("crab-attack",$crab-url, 3, play-6, 6);
-@include createSprite("crab-death", $crab-url, 1, play-5, 5);
+@include createSprite("crab-attack",$crab-url, 4, play-6, 6);
+@include createSprite("crab-death", $crab-url, 6, play-5, 5);
 
 @include createIdle("golem-idle",  $golem-url);
-@include createSprite("golem-attack",$golem-url, 3, play-6, 6);
-@include createSprite("golem-death", $golem-url, 2, play-6, 6); //2
+@include createSprite("golem-attack",$golem-url, 4, play-6, 6);
+@include createSprite("golem-death", $golem-url, 5, play-6, 6); //2
 
 @include createIdle("pebble-idle", $pebble-url);
-@include createSprite("pebble-attack", $pebble-url, 3, play-5, 5);
-@include createSprite("pebble-death", $pebble-url, 2, play-6, 6);
+@include createSprite("pebble-attack", $pebble-url, 1, play-5, 5);
+@include createSprite("pebble-death", $pebble-url, 3, play-6, 6);
 
 @include createIdle("rat-idle", $rat-url, playSkip);
-@include createSprite("rat-attack", $rat-url, 4, play-6, 6);
-@include createSprite("rat-death", $rat-url, 1, play-5, 5);
+@include createSprite("rat-attack", $rat-url, 2, play-6, 6);
+@include createSprite("rat-death", $rat-url, 5, play-5, 5);
 
 @include createIdle("slime-idle", $slime-url);
-@include createSprite("slime-attack", $slime-url, 3);
-@include createSprite("slime-death", $slime-url, 1);
+@include createSprite("slime-attack", $slime-url, 2, play-6, 6);
+@include createSprite("slime-death", $slime-url, 4);
 
 .hidden:empty{
     display: none;
@@ -130,9 +153,4 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
 @keyframes playSkip {
     from { background-position-x: -64px; }
     to { background-position-x: -320px; }
-}
-
-@keyframes enemy-attack-move {
-    from {}
-    to {}
 }
