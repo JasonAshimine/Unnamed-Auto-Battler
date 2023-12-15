@@ -63,16 +63,21 @@ def get_session_data(request):
     
     return None
 
+def get_full_user_data(request):
+    user_data = request.user.player.serialize()
+    user_data['state'] = request.session.get(SESSION_STATE, None)
+
+    session_data = get_session_data(request)
+    if session_data:
+        user_data.update(session_data)
+    
+    return user_data
 
 def JsonUserResponse(request, data = None):
-    user_data = request.user.player.serialize()
+    user_data = get_full_user_data(request)
 
     if data:
         user_data.update(data)
-
-    session_data = request.session.get(SESSION_COMBAT_LOG, None)
-    if session_data:
-        user_data.update(session_data)
         
     return JsonResponse(user_data)
 
@@ -112,6 +117,14 @@ def reroll(request):
     request.user.player.reroll()
     return JsonUserResponse(request)
 
+@login_required
+@require_POST
+def end_combat(request):
+    request.session[SESSION_STATE] = STATE_DRAFT
+    request.session[SESSION_COMBAT_LOG] = None
+
+    return JsonUserResponse(request)
+
 
 @login_required
 @require_POST
@@ -120,7 +133,6 @@ def end_draft(request): # TODO - return combat data and update new round & winne
     opponent = CombatList.get_opponent(player.data.round)
 
     winner, combat_log = calc_combat(player.creature, opponent)
-    end_update_player(player, winner)
 
     combat_data = {
         COMBAT_LOG: combat_log, 
@@ -128,7 +140,7 @@ def end_draft(request): # TODO - return combat data and update new round & winne
         ENEMY: opponent.serialize()
     }
 
-
+    end_update_player(player, winner)
     request.session[SESSION_STATE] = STATE_COMBAT
     request.session[SESSION_COMBAT_LOG] = combat_data
 
@@ -214,7 +226,7 @@ def create_player(user):
     player = Player.objects.create(name=user.username)
     Creature.objects.create(player=player, **START_CREATURE)
     data = GameData.objects.create(player=player,**START_GAME_DATA)
-    
+        
     user.player = player
     user.save()
 

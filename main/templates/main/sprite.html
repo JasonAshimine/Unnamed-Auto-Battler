@@ -1,15 +1,16 @@
-<div name="{{tag}}" class="sprite-container enemy">
-    <div class="{{tag}}-idle sprite" data-tag="{{tag}}"></div>
-
+<div name="{{tag}}" class="sprite-container {{type}}">
+    <div class="sprite-wrapper">
+        <div class="{{tag}}-idle sprite" data-tag="{{tag}}"></div>
+    </div>
     
     <div class="progress" role="progressbar" >
-        <div class="progress-bar w-75 bg-danger"></div>
+        <div class="progress-bar bg-danger" style="width:100%;"></div>
     </div>
 
     <div class="stats">
         <div><d name="level">{{creature.level}}</d><i class="level-icon" title="Level"></i></div>
-        <div><d name="health">{{creature.health}}</d><i class="health-icon" title="Health"></i></div>
-        <div><d name="attack">{{creature.attack}}</d><i class="attack-icon" title="Attack"></i></div>
-        <div><d name="defense">{{creature.defense}}</d><i class="defense-icon" title="Defense"></i></div>
+        <div><d name="health">{{creature.health|floatformat:0}}</d><i class="health-icon" title="Health"></i></div>
+        <div><d name="attack">{{creature.attack|floatformat:0}}</d><i class="attack-icon" title="Attack"></i></div>
+        <div><d name="defense">{{creature.defense|floatformat:0}}</d><i class="defense-icon" title="Defense"></i></div>
     </div>
 </div>

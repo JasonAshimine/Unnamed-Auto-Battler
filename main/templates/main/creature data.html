@@ -5,9 +5,9 @@
     </div>
     <div class="card-body">
         <div><i class="level-icon" title="Level"></i><d name="level">{{creature.level}}</d></div>
-        <div><i class="health-icon" title="Health"></i> <d name="health">{{creature.health}}</d></div>
-        <div><i class="attack-icon" title="Attack"></i> <d name="attack">{{creature.attack}}</d></div>
-        <div><i class="defense-icon" title="Defense"></i> <d name="defense">{{creature.defense}}</d></div>
+        <div><i class="health-icon" title="Health"></i> <d name="health">{{creature.health|floatformat:0}}</d></div>
+        <div><i class="attack-icon" title="Attack"></i> <d name="attack">{{creature.attack|floatformat:0}}</d></div>
+        <div><i class="defense-icon" title="Defense"></i> <d name="defense">{{creature.defense|floatformat:0}}</d></div>
     </div>
 </div>
 

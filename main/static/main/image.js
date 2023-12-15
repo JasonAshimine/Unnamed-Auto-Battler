@@ -16,3 +16,25 @@ function handleImageClick(element){
     element.setAttribute('class', `sprite ${element.dataset.tag}-${type}`);
     console.log(type, element.dataset.tag)
 }
+
+
+async function test(index){
+    const res = await fetchCSRF('api/player/');
+    const data = await res.json();
+
+    console.log(data);
+
+    animateCombatRound(data, index)
+}
+
+
+function animateCombatRound(data, index){
+    const {combat_log, enemy, creature} = data;
+
+    const round = combat_log[index];
+
+    const hp_bar = document.querySelector('#combat .user .progress-bar');
+    const sprite = document.querySelector('#combat .user .progress-bar');
+
+}
+

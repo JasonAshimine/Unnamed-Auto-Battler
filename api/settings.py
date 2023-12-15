@@ -21,7 +21,7 @@ STATE_DRAFT = 'draft'
 # -------------------------------------
 # Draft
 
-DRAFT_MAX_SHOW = 5
+DRAFT_MAX_SHOW = 4
 MAX_TIER = 6
 
 START_TIER_COST = 5

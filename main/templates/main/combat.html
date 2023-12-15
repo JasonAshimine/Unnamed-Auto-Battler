@@ -1,19 +1,6 @@
-<div class="card">
-    <div class="data">
-        {% include 'main/sprite.html' with tag='bones' %}
+<div class="d-flex justify-content-center">
+    <div class="d-flex">
+        {% include 'main/sprite.html' with tag='player' creature=creature type='user' %}
+        {% include 'main/sprite.html' with tag='bones' creature=enemy type='enemy' %}
     </div>
-
-    
 </div>
-
-<div class="d-flex justify-content-between">
-    {% include 'main/sprite.html' with tag='bat' %}
-    {% include 'main/sprite.html' with tag='bones' %}
-    {% include 'main/sprite.html' with tag='crab' %}
-    {% include 'main/sprite.html' with tag='golem' %}
-    {% include 'main/sprite.html' with tag='pebble' %}
-    {% include 'main/sprite.html' with tag='rat' %}
-    {% include 'main/sprite.html' with tag='slime' %}
-</div>
-
-

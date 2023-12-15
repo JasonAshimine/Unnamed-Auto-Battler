@@ -1,8 +1,21 @@
 @use 'icons';
 @use 'sass:math';
 
+$stat-offset: -80px;
+
 .count:not(:empty)::before{
     content: "x";
+}
+
+.combat{
+    #data{
+        display: none;
+    }
+}
+.draft{
+    .enemy{
+        display: none;
+    }
 }
 
 
@@ -27,23 +40,28 @@
         flex-direction: column;
         justify-content: space-evenly;
         height: 100%;
+        width: 80px;
 
         div{
             display: flex;
             align-items: center;
+            justify-content: end;
         }
     }
 }
 
 .sprite-container.user{
     .stats{
-        left: 0;
+        left: $stat-offset;
     }
 }
 
 .sprite-container.enemy{
+    .sprite-wrapper{
+        transform:  scaleX(-1);
+    }
     .stats{
-        right: 0;
+        right: $stat-offset / 2;
     }
 }
 
@@ -52,14 +70,20 @@ $sprite-height: 64px;
 $speed-idle: .6s;
 $speed-action: .8s;
 
+$isUser:true;
+
 @mixin sprite_data($url){
     border: 1px solid black;
     width: $sprite-width;
     height: $sprite-height;
 
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
     background-image: url($url);
     background-repeat: no-repeat;
-    transform:  scaleX(-1) scale(3);
+    transform: scale(3);
 }
 
 @mixin sprite-idle($url, $play:play) {
@@ -69,10 +93,9 @@ $speed-action: .8s;
     animation-iteration-count: infinite;
 }
 
-@mixin sprite-action($url, $anim:play-action, $steps:4) {
+@mixin sprite-action($url, $anim:play-action, $steps:4, $speed: $speed-action) {
     @include sprite_data($url);
-
-    animation: $anim $speed-action steps($steps);
+    animation: $anim $speed steps($steps);
     animation-iteration-count: 1;
 }
 
@@ -84,10 +107,15 @@ $pebble-url: "img/Pebble_Full.png"; // idle, _ , death, attack
 $rat-url: "img/Rat_Full.png";   //idle skip, death, hit, attack
 $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
 
-@mixin createSprite($name, $url, $offset: 0, $anim:play-action, $steps:4){
+$attack-url: "img/attack.png";
+$death-url: "img/death.png";
+$idle-url: "img/idle.png";
+
+
+@mixin createSprite($name, $url, $offset: 0, $anim:play-action, $steps:4, $speed:$speed-action){
     .#{$name}{
         background-position-y: -($offset * $sprite-height);
-        @include sprite-action($url, $anim, $steps);
+        @include sprite-action($url, $anim, $steps, $speed);
     }
 }
 
@@ -96,6 +124,10 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
         @include sprite-idle($url, $anim);
     }
 }
+
+@include createIdle("player-idle", $idle-url);
+@include createSprite("player-attack",$attack-url,0, play-17, 17, 1.5s);
+@include createSprite("player-death", $death-url,0, play-11, 11);
 
 
 @include createIdle("bat-idle",  $bat-url, playSkip);
@@ -130,6 +162,14 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
     display: none;
 }
 
+
+@mixin genFrames($count){
+    @keyframes play-#{$count} {
+        from { background-position-x: 0; }
+        to { background-position-x: -($sprite-width * $count); }
+    }
+}
+
 @keyframes play {
     from { background-position-x: 0; }
     to { background-position-x: -256px; }
@@ -140,17 +180,12 @@ $slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
     to { background-position-x: -256px; }
 }
 
-@keyframes play-6 {
-    from { background-position-x: 0; }
-    to { background-position-x: -($sprite-width * 6); }
-}
-
-@keyframes play-5 {
-    from { background-position-x: 0; }
-    to { background-position-x: -($sprite-width * 5); }
-}
-
 @keyframes playSkip {
     from { background-position-x: -64px; }
     to { background-position-x: -320px; }
 }
+
+@include genFrames(5);
+@include genFrames(6);
+@include genFrames(11);
+@include genFrames(17);

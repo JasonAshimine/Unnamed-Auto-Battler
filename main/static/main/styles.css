@@ -3,6 +3,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -32px -160px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -13,6 +16,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -32px -192px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -23,6 +29,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -192px 0px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -33,6 +42,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -224px -384px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -43,6 +55,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: 0px -64px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -53,6 +68,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -32px -64px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -63,6 +81,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -128px -128px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -73,6 +94,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -192px -384px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -83,6 +107,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -416px -416px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -93,6 +120,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -288px -160px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -103,6 +133,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -160px -96px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -113,6 +146,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -128px -64px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -123,6 +159,9 @@
   width: 32px;
   height: 32px;
   display: inline-block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-position: -384px -416px;
   background-repeat: no-repeat;
   background-image: url("img/Icons.png");
@@ -130,6 +169,14 @@
 
 .count:not(:empty)::before {
   content: "x";
+}
+
+.combat #data {
+  display: none;
+}
+
+.draft .enemy {
+  display: none;
 }
 
 .sprite-container {
@@ -152,27 +199,79 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
+  width: 80px;
 }
 .sprite-container .stats div {
   display: flex;
   align-items: center;
+  justify-content: end;
 }
 
 .sprite-container.user .stats {
-  left: 0;
+  left: -80px;
 }
 
+.sprite-container.enemy .sprite-wrapper {
+  transform: scaleX(-1);
+}
 .sprite-container.enemy .stats {
-  right: 0;
+  right: -40px;
+}
+
+.player-idle {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  background-image: url("img/idle.png");
+  background-repeat: no-repeat;
+  transform: scale(3);
+  animation: play 0.6s steps(4);
+  animation-iteration-count: infinite;
+}
+
+.player-attack {
+  background-position-y: 0px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  background-image: url("img/attack.png");
+  background-repeat: no-repeat;
+  transform: scale(3);
+  animation: play-17 1.5s steps(17);
+  animation-iteration-count: 1;
+}
+
+.player-death {
+  background-position-y: 0px;
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  background-image: url("img/death.png");
+  background-repeat: no-repeat;
+  transform: scale(3);
+  animation: play-11 0.8s steps(11);
+  animation-iteration-count: 1;
 }
 
 .bat-idle {
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: playSkip 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -182,9 +281,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
 }
@@ -194,9 +296,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
 }
@@ -205,9 +310,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -217,9 +325,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -229,9 +340,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -240,9 +354,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -252,9 +369,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -264,9 +384,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
 }
@@ -275,9 +398,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -287,9 +413,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -299,9 +428,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -310,9 +442,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -322,9 +457,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
 }
@@ -334,9 +472,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -345,9 +486,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: playSkip 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -357,9 +501,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -369,9 +516,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-5 0.8s steps(5);
   animation-iteration-count: 1;
 }
@@ -380,9 +530,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play 0.6s steps(4);
   animation-iteration-count: infinite;
 }
@@ -392,9 +545,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-6 0.8s steps(6);
   animation-iteration-count: 1;
 }
@@ -404,9 +560,12 @@
   border: 1px solid black;
   width: 64px;
   height: 64px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
-  transform: scaleX(-1) scale(3);
+  transform: scale(3);
   animation: play-action 0.8s steps(4);
   animation-iteration-count: 1;
 }
@@ -431,12 +590,12 @@
     background-position-x: -256px;
   }
 }
-@keyframes play-6 {
+@keyframes playSkip {
   from {
-    background-position-x: 0;
+    background-position-x: -64px;
   }
   to {
-    background-position-x: -384px;
+    background-position-x: -320px;
   }
 }
 @keyframes play-5 {
@@ -447,12 +606,28 @@
     background-position-x: -320px;
   }
 }
-@keyframes playSkip {
+@keyframes play-6 {
   from {
-    background-position-x: -64px;
+    background-position-x: 0;
   }
   to {
-    background-position-x: -320px;
+    background-position-x: -384px;
+  }
+}
+@keyframes play-11 {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -704px;
+  }
+}
+@keyframes play-17 {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -1088px;
   }
 }
 

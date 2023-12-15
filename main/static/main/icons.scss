@@ -8,6 +8,10 @@ $icon-height: 32px;
     height: $icon-height;
     display: inline-block;
 
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
     background-position: (-$icon-width * $x) (-$icon-height * $y);
     background-repeat: no-repeat;
     background-image: url($icon-url);
