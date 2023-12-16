@@ -6,7 +6,6 @@ $speed-action: .8s;
 $isUser:true;
 
 @mixin sprite_data($url){
-    border: 1px solid black;
     width: $sprite-width;
     height: $sprite-height;
 

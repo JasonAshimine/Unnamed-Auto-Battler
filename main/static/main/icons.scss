@@ -3,7 +3,6 @@ $icon-width: 32px;
 $icon-height: 32px;
 
 @mixin icons($x, $y){
-    border: 1px solid black;
     width: $icon-width;
     height: $icon-height;
     display: inline-block;

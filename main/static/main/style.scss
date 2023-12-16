@@ -17,6 +17,7 @@
         opacity: 1;
     }
 
+
     to {
         width: 0;
         opacity: 0;
@@ -42,7 +43,15 @@ $dmg-speed: 1s;
     .enemy{
         display: none;
     }
+    #start-combat, #end-combat{
+        display: none;  
+    }
 }
+
+#data{
+    animation: show 1s forwards;
+}
+
 
 #combat #speed button::before{
     content:'x'attr(data-speed);

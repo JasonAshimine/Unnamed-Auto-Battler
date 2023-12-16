@@ -59,12 +59,15 @@ Combat handlers:
  ----------------------------------------- */
 
 async function endCombat(){
-    SPRITE_ENEMY.element.classList.add('hide');
     SPRITE_USER.hp.style.width = '100%';
+    SPRITE_ENEMY.element.addEventListener
 
-    resetCombat();
+    await new Promise(res => {
+        SPRITE_ENEMY.element.addEventListener('animationend', res, {once: true});
+        SPRITE_ENEMY.element.classList.add('hide');
+    });
 
-    return fetchHandler('/api/endCombat/');
+    return fetchHandler('/api/endCombat/').then(() => resetCombat());
 }
 
 
@@ -164,5 +167,5 @@ function resetCombat(){
     idleSprite(SPRITE_ENEMY.sprite);
     idleSprite(SPRITE_USER.sprite);
     SPRITE_ENEMY.element.classList.remove('hide');
-    document.querySelectorAll('#combat-buttons button').forEach(e => e.disabled = false);
+    document.querySelectorAll('#combat-buttons button:disabled').forEach(e => e.disabled = false);
 }
