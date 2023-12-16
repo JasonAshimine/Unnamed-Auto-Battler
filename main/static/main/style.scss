@@ -1,23 +1,52 @@
 @use 'icons';
+@use 'sprite-animation';
 @use 'sass:math';
 
+:root{
+    --speed: 1;
+}
+
+
+.hide{
+    animation: hide calc(1s / var(--speed)) forwards ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes hide {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        width: 0;
+        opacity: 0;
+        display: none;
+    }
+}
+
+
 $stat-offset: -80px;
+$dmg-speed: 1s;
 
 .count:not(:empty)::before{
     content: "x";
 }
 
-.combat{
+#game[data-state=combat]{
     #data{
         display: none;
     }
 }
-.draft{
+
+#game[data-state=draft]{
     .enemy{
         display: none;
     }
 }
 
+#combat #speed button::before{
+    content:'x'attr(data-speed);
+}
 
 .sprite-container{
     width: 200px;
@@ -32,6 +61,21 @@ $stat-offset: -80px;
         top: 0;
         left: 15%;
         width: 70%;
+
+        .progress-bar{
+            transition: width calc(.6s / var(--speed)) ease !important;
+        }
+    }
+
+    .damage{
+        position: absolute;
+        color:red;
+        font-weight: bold;
+
+        visibility: hidden;
+        animation: damage calc($dmg-speed / var(--speed)) forwards ease-in-out;
+        animation-iteration-count: 1;
+        animation-play-state: paused;
     }
 
     .stats{
@@ -48,6 +92,8 @@ $stat-offset: -80px;
             justify-content: end;
         }
     }
+
+
 }
 
 .sprite-container.user{
@@ -61,131 +107,24 @@ $stat-offset: -80px;
         transform:  scaleX(-1);
     }
     .stats{
-        right: $stat-offset / 2;
+        right: math.div($stat-offset, 2);
     }
 }
 
-$sprite-width: 64px;
-$sprite-height: 64px;
-$speed-idle: .6s;
-$speed-action: .8s;
-
-$isUser:true;
-
-@mixin sprite_data($url){
-    border: 1px solid black;
-    width: $sprite-width;
-    height: $sprite-height;
-
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
-
-    background-image: url($url);
-    background-repeat: no-repeat;
-    transform: scale(3);
-}
-
-@mixin sprite-idle($url, $play:play) {
-    @include sprite_data($url);
-
-    animation: $play $speed-idle steps(4);
-    animation-iteration-count: infinite;
-}
-
-@mixin sprite-action($url, $anim:play-action, $steps:4, $speed: $speed-action) {
-    @include sprite_data($url);
-    animation: $anim $speed steps($steps);
-    animation-iteration-count: 1;
-}
-
-$bat-url: "img/Bat_Full.png"; //idle skip, 1 death, na, 3 attack 
-$bones-url: "img/Bones_SingleSkull_Full.png"; //idle, na, 2 death, 3 attack
-$crab-url: "img/Crab_Full.png"; //idle, death, na, attack
-$golem-url: "img/Golem_Armor_Full.png"; // idle, _ , _, attack
-$pebble-url: "img/Pebble_Full.png"; // idle, _ , death, attack
-$rat-url: "img/Rat_Full.png";   //idle skip, death, hit, attack
-$slime-url: "img/Slime_Spiked_Full.png"; //idle, death, hit, attack
-
-$attack-url: "img/attack.png";
-$death-url: "img/death.png";
-$idle-url: "img/idle.png";
-
-
-@mixin createSprite($name, $url, $offset: 0, $anim:play-action, $steps:4, $speed:$speed-action){
-    .#{$name}{
-        background-position-y: -($offset * $sprite-height);
-        @include sprite-action($url, $anim, $steps, $speed);
+@keyframes damage {
+    from {
+        visibility: visible;
+        opacity: 0;
+        top: 30%;
     }
-}
 
-@mixin createIdle($name, $url, $anim:play){
-    .#{$name}{
-        @include sprite-idle($url, $anim);
+    50% {
+        opacity: 1;
     }
-}
 
-@include createIdle("player-idle", $idle-url);
-@include createSprite("player-attack",$attack-url,0, play-17, 17, 1.5s);
-@include createSprite("player-death", $death-url,0, play-11, 11);
-
-
-@include createIdle("bat-idle",  $bat-url, playSkip);
-@include createSprite("bat-attack",$bat-url, 2);
-@include createSprite("bat-death", $bat-url, 4);
-
-@include createIdle("bones-idle",  $bones-url);
-@include createSprite("bones-attack",$bones-url, 1, play-6, 6);
-@include createSprite("bones-death", $bones-url, 3, play-6, 6);
-
-@include createIdle("crab-idle",  $crab-url);
-@include createSprite("crab-attack",$crab-url, 4, play-6, 6);
-@include createSprite("crab-death", $crab-url, 6, play-5, 5);
-
-@include createIdle("golem-idle",  $golem-url);
-@include createSprite("golem-attack",$golem-url, 4, play-6, 6);
-@include createSprite("golem-death", $golem-url, 5, play-6, 6); //2
-
-@include createIdle("pebble-idle", $pebble-url);
-@include createSprite("pebble-attack", $pebble-url, 1, play-5, 5);
-@include createSprite("pebble-death", $pebble-url, 3, play-6, 6);
-
-@include createIdle("rat-idle", $rat-url, playSkip);
-@include createSprite("rat-attack", $rat-url, 2, play-6, 6);
-@include createSprite("rat-death", $rat-url, 5, play-5, 5);
-
-@include createIdle("slime-idle", $slime-url);
-@include createSprite("slime-attack", $slime-url, 2, play-6, 6);
-@include createSprite("slime-death", $slime-url, 4);
-
-.hidden:empty{
-    display: none;
-}
-
-
-@mixin genFrames($count){
-    @keyframes play-#{$count} {
-        from { background-position-x: 0; }
-        to { background-position-x: -($sprite-width * $count); }
+    to {
+        top: 10px;
+        opacity: 0;
+        visibility: hidden;
     }
-}
-
-@keyframes play {
-    from { background-position-x: 0; }
-    to { background-position-x: -256px; }
-}
-
-@keyframes play-action {
-    from { background-position-x: 0; }
-    to { background-position-x: -256px; }
-}
-
-@keyframes playSkip {
-    from { background-position-x: -64px; }
-    to { background-position-x: -320px; }
-}
-
-@include genFrames(5);
-@include genFrames(6);
-@include genFrames(11);
-@include genFrames(17);
+  }

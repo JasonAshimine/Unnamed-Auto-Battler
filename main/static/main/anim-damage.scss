@@ -1,0 +1,23 @@
+
+
+
+.fadeout{
+    animation: damage forwards ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes damage {
+    from {
+        opacity: 0;
+        top: 20%;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        top: 0;
+        opacity: 0;
+    }
+  }

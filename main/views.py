@@ -7,16 +7,18 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.template.loader import render_to_string
 
+from api.views import get_full_user_data
+
 #from main.models import User
 
 # Create your views here.
 
 def index(request):
     if request.user.is_authenticated:
-        return render(request, "main/index.html", request.user.player.serialize())
+        return render(request, "main/index.html", get_full_user_data(request))
 
     return render(request, "main/index.html")
 
 
 def component(request):
-    return HttpResponse(render_to_string('main/data.html', request.user.player.serialize()), content_type="text/plain")
+    return HttpResponse(render_to_string('main/data.html', get_full_user_data(request)), content_type="text/plain")

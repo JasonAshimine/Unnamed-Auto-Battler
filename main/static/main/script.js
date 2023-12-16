@@ -22,6 +22,7 @@ handlers
 */
 
 async function hanldeEndTurn(){
+    resetCombat();
     const data = await fetchHandler('api/endTurn/');
 }
 
@@ -60,8 +61,8 @@ async function fetchHandler(url = '', data = {}, option = {}){
         return null;
     }        
 
-    updateAll(serverData);
     console.log(url, "data:", data, "server:",serverData);
+    updateAll(serverData);    
     return serverData;
 }
 
@@ -84,10 +85,16 @@ function fetchCSRF(url = '', data = {}, option = {}){
 Update
 */
 function updateAll(serverData){
-    const {name, data, creature}  = serverData;
+    const {name, data, creature, state}  = serverData;
+    document.querySelector('#game').dataset.state = state;
 
+    updateCombat(data);
     updateData(data);
     updateCreature(creature);
+}
+
+function updateCombat(data){
+
 }
 
 function updateData(serverData){
@@ -153,5 +160,6 @@ function getItemClone(item, isBuy, index){
 function updateElement(data, parent = document){
     const update = ([key,value]) => parent.querySelectorAll(`[name=${key}] `).forEach(element => element.textContent=value)
 
-    Object.entries(data).forEach(update);
+    if(parent)
+        Object.entries(data).forEach(update);
 }

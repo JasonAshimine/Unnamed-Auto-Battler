@@ -1,11 +1,13 @@
 <div name="{{tag}}" class="sprite-container {{type}}">
     <div class="sprite-wrapper">
-        <div class="{{tag}}-idle sprite" data-tag="{{tag}}"></div>
+        <div class="sprite" data-tag="{{tag}}" data-type="idle"></div>
     </div>
     
     <div class="progress" role="progressbar" >
         <div class="progress-bar bg-danger" style="width:100%;"></div>
     </div>
+
+    <div class="damage">100</div>
 
     <div class="stats">
         <div><d name="level">{{creature.level}}</d><i class="level-icon" title="Level"></i></div>

@@ -167,58 +167,7 @@
   background-image: url("img/Icons.png");
 }
 
-.count:not(:empty)::before {
-  content: "x";
-}
-
-.combat #data {
-  display: none;
-}
-
-.draft .enemy {
-  display: none;
-}
-
-.sprite-container {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.sprite-container .progress {
-  position: absolute;
-  top: 0;
-  left: 15%;
-  width: 70%;
-}
-.sprite-container .stats {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-  width: 80px;
-}
-.sprite-container .stats div {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-
-.sprite-container.user .stats {
-  left: -80px;
-}
-
-.sprite-container.enemy .sprite-wrapper {
-  transform: scaleX(-1);
-}
-.sprite-container.enemy .stats {
-  right: -40px;
-}
-
-.player-idle {
+[data-tag=player][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -228,11 +177,12 @@
   background-image: url("img/idle.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.player-attack {
+[data-tag=player][data-type=attack] {
   background-position-y: 0px;
   border: 1px solid black;
   width: 64px;
@@ -243,11 +193,12 @@
   background-image: url("img/attack.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-17 1.5s steps(17);
+  animation: play-17 calc(1.5s / var(--speed)) steps(17);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.player-death {
+[data-tag=player][data-type=death] {
   background-position-y: 0px;
   border: 1px solid black;
   width: 64px;
@@ -258,11 +209,12 @@
   background-image: url("img/death.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-11 0.8s steps(11);
+  animation: play-11 calc(0.8s / var(--speed)) steps(11);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.bat-idle {
+[data-tag=bat][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -272,11 +224,12 @@
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: playSkip 0.6s steps(4);
+  animation: playSkip calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.bat-attack {
+[data-tag=bat][data-type=attack] {
   background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
@@ -287,11 +240,12 @@
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-action 0.8s steps(4);
+  animation: play-action calc(0.8s / var(--speed)) steps(4);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.bat-death {
+[data-tag=bat][data-type=death] {
   background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
@@ -302,11 +256,12 @@
   background-image: url("img/Bat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-action 0.8s steps(4);
+  animation: play-action calc(0.8s / var(--speed)) steps(4);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.bones-idle {
+[data-tag=bones][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -316,11 +271,12 @@
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.bones-attack {
+[data-tag=bones][data-type=attack] {
   background-position-y: -64px;
   border: 1px solid black;
   width: 64px;
@@ -331,11 +287,12 @@
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.bones-death {
+[data-tag=bones][data-type=death] {
   background-position-y: -192px;
   border: 1px solid black;
   width: 64px;
@@ -346,11 +303,12 @@
   background-image: url("img/Bones_SingleSkull_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.crab-idle {
+[data-tag=crab][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -360,11 +318,12 @@
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.crab-attack {
+[data-tag=crab][data-type=attack] {
   background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
@@ -375,11 +334,12 @@
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.crab-death {
+[data-tag=crab][data-type=death] {
   background-position-y: -384px;
   border: 1px solid black;
   width: 64px;
@@ -390,11 +350,12 @@
   background-image: url("img/Crab_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-5 0.8s steps(5);
+  animation: play-5 calc(0.8s / var(--speed)) steps(5);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.golem-idle {
+[data-tag=golem][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -404,11 +365,12 @@
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.golem-attack {
+[data-tag=golem][data-type=attack] {
   background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
@@ -419,11 +381,12 @@
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.golem-death {
+[data-tag=golem][data-type=death] {
   background-position-y: -320px;
   border: 1px solid black;
   width: 64px;
@@ -434,11 +397,12 @@
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.pebble-idle {
+[data-tag=pebble][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -448,11 +412,12 @@
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.pebble-attack {
+[data-tag=pebble][data-type=attack] {
   background-position-y: -64px;
   border: 1px solid black;
   width: 64px;
@@ -463,11 +428,12 @@
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-5 0.8s steps(5);
+  animation: play-5 calc(0.8s / var(--speed)) steps(5);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.pebble-death {
+[data-tag=pebble][data-type=death] {
   background-position-y: -192px;
   border: 1px solid black;
   width: 64px;
@@ -478,11 +444,12 @@
   background-image: url("img/Pebble_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.rat-idle {
+[data-tag=rat][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -492,11 +459,12 @@
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: playSkip 0.6s steps(4);
+  animation: playSkip calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.rat-attack {
+[data-tag=rat][data-type=attack] {
   background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
@@ -507,11 +475,12 @@
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.rat-death {
+[data-tag=rat][data-type=death] {
   background-position-y: -320px;
   border: 1px solid black;
   width: 64px;
@@ -522,11 +491,12 @@
   background-image: url("img/Rat_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-5 0.8s steps(5);
+  animation: play-5 calc(0.8s / var(--speed)) steps(5);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.slime-idle {
+[data-tag=slime][data-type=idle] {
   border: 1px solid black;
   width: 64px;
   height: 64px;
@@ -536,11 +506,12 @@
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play 0.6s steps(4);
+  animation: play calc(0.6s / var(--speed)) steps(4);
   animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
 }
 
-.slime-attack {
+[data-tag=slime][data-type=attack] {
   background-position-y: -128px;
   border: 1px solid black;
   width: 64px;
@@ -551,11 +522,12 @@
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 0.8s steps(6);
+  animation: play-6 calc(0.8s / var(--speed)) steps(6);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
-.slime-death {
+[data-tag=slime][data-type=death] {
   background-position-y: -256px;
   border: 1px solid black;
   width: 64px;
@@ -566,8 +538,9 @@
   background-image: url("img/Slime_Spiked_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-action 0.8s steps(4);
+  animation: play-action calc(0.8s / var(--speed)) steps(4);
   animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .hidden:empty {
@@ -628,6 +601,107 @@
   }
   to {
     background-position-x: -1088px;
+  }
+}
+:root {
+  --speed: 1;
+}
+
+.hide {
+  animation: hide calc(1s / var(--speed)) forwards ease-in-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    width: 0;
+    opacity: 0;
+    display: none;
+  }
+}
+.count:not(:empty)::before {
+  content: "x";
+}
+
+#game[data-state=combat] #data {
+  display: none;
+}
+
+#game[data-state=draft] .enemy {
+  display: none;
+}
+
+#combat #speed button::before {
+  content: "x" attr(data-speed);
+}
+
+.sprite-container {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sprite-container .progress {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+}
+.sprite-container .progress .progress-bar {
+  transition: width calc(0.6s / var(--speed)) ease !important;
+}
+.sprite-container .damage {
+  position: absolute;
+  color: red;
+  font-weight: bold;
+  visibility: hidden;
+  animation: damage calc(1s / var(--speed)) forwards ease-in-out;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+.sprite-container .stats {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 80px;
+}
+.sprite-container .stats div {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.sprite-container.user .stats {
+  left: -80px;
+}
+
+.sprite-container.enemy .sprite-wrapper {
+  transform: scaleX(-1);
+}
+.sprite-container.enemy .stats {
+  right: -40px;
+}
+
+@keyframes damage {
+  from {
+    visibility: visible;
+    opacity: 0;
+    top: 30%;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    top: 10px;
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
