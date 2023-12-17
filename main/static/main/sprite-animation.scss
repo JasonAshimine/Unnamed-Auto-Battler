@@ -80,7 +80,7 @@ $idle-url: "img/idle.png";
 
 @include createIdle("golem",  $golem-url);
 @include createSprite("golem","attack",$golem-url, 4, play-6, 6);
-@include createSprite("golem","death", $golem-url, 5, play-6, 6); //2
+@include createSprite("golem","death", $golem-url, 6, play-7, 7); //2
 
 @include createIdle("pebble", $pebble-url);
 @include createSprite("pebble","attack", $pebble-url, 1, play-5, 5);
@@ -123,5 +123,6 @@ $idle-url: "img/idle.png";
 
 @include genFrames(5);
 @include genFrames(6);
+@include genFrames(7);
 @include genFrames(11);
 @include genFrames(12);

@@ -12,8 +12,6 @@ urlpatterns = [
 
     path("retire/", views.retire, name='retire'),
 
-    # test
-    path("combat/", views.combat, name='combat'),
 
     # Info
     path("player/", views.player, name='player'),

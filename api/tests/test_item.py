@@ -36,7 +36,7 @@ class TestItem(TestCase):
 
     def test_serialize(self):
         itemType = ItemType.objects.get(type="attack")
-        self.assertEqual(itemType.serialize(), "attack")
+        self.assertEqual(itemType.serialize()['type'], "attack")
         
         item = Item.objects.get(pk=2)
 

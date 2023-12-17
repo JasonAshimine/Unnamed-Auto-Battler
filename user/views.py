@@ -21,11 +21,11 @@ def login_view(request):
             # Redirect to original page or default to index
             return HttpResponseRedirect(request.POST.get('next') or reverse("index"))
         else:
-            return render(request, "main/login.html", {
+            return render(request, "user/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "main/login.html")
+        return render(request, "user/login.html")
 
 
 def logout_view(request):
@@ -41,7 +41,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "main/register.html", {
+            return render(request, "user/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -52,10 +52,10 @@ def register(request):
             
             user.save()
         except IntegrityError:
-            return render(request, "main/register.html", {
+            return render(request, "user/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "main/register.html")
+        return render(request, "user/register.html")

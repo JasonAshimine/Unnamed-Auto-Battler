@@ -151,23 +151,6 @@ def get_opponent(request):
     round = request.user.player.data.round
     return CombatList.get_opponent(round)
 
-def end_round(player):
-    pass
-
-# ---------------------------------------
-# Combat
-
-def combat(request):
-    user = request.user.player.creature
-    enemy = get_opponent(request)
-
-    winner, combat_log = calc_combat(user, enemy)
-
-    return JsonResponse({
-        WINNER: winner,
-        COMBAT_LOG:combat_log
-        }, safe=False)
-
 # ---------------------------------------
 # Get Data
 
@@ -202,7 +185,7 @@ def player(request):
 def setup(user):
     if user.player is None:
         create_player(user)
-
+        user.save()
 
 def create_player(user):
     player = Player.objects.create(name=user.username, user=user)

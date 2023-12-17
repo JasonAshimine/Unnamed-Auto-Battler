@@ -360,7 +360,7 @@
 }
 
 [data-tag=golem][data-type=death] {
-  background-position-y: -320px;
+  background-position-y: -384px;
   width: 64px;
   height: 64px;
   image-rendering: pixelated;
@@ -369,7 +369,7 @@
   background-image: url("img/Golem_Armor_Full.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-6 calc(0.8s / var(--speed)) steps(6);
+  animation: play-7 calc(0.8s / var(--speed)) steps(7);
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
@@ -548,6 +548,14 @@
   }
   to {
     background-position-x: -384px;
+  }
+}
+@keyframes play-7 {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -448px;
   }
 }
 @keyframes play-11 {

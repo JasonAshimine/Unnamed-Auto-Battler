@@ -79,7 +79,7 @@ async function fetchHandler(url = '', data = {}, option = {}){
 
     if(res.status == 400){
         console.error(serverData);
-        document.querySelector('#error').textContent = JSON.stringify(serverData);
+        document.querySelector('#error').textContent = serverData?.error;
         return null;
     }        
 
