@@ -11,34 +11,6 @@ from api.models import CombatList, GameData, Item, Creature, Player, get_draft_l
 from .settings import *
 # Create your views here.
 
-
-'''
-game
- charecter
-   DONE modifiers
-   TODO win/loss
-   DONE tier
-   TODO round
-   DONE gold
-
-   
-draft
-    DONE buy
-    SKIP sell 
-    DONE reroll
-    DONE list of options
-
-server
-    TODO round[charecters]
-    TODO update with last opponent or winner?
-
-    TODO getOpponent
-
-combat
-    TODO calc combat 
-    TODO deteministic combat
-'''
-
 def handle_buy_error(func):
     def wrapper(*args, **kwargs):
         try:
@@ -67,6 +39,8 @@ def get_session_data(request):
 def get_full_user_data(request):
     if request.user.player is None:
         setup(request.user)
+
+
 
     user_data = request.user.player.serialize()
     user_data['state'] = request.session.get(SESSION_STATE, DEFAULT_STATE)
@@ -231,9 +205,8 @@ def setup(user):
 
 
 def create_player(user):
-    player = Player.objects.create(name=user.username)
+    player = Player.objects.create(name=user.username, user=user)
     create_game_data(player)
-    
 
 def create_game_data(player):
     Creature.objects.create(player=player, **START_CREATURE)
