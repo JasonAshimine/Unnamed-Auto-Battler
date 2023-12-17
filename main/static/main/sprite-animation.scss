@@ -62,7 +62,7 @@ $idle-url: "img/idle.png";
 }
 
 @include createIdle("player", $idle-url);
-@include createSprite("player","attack",$attack-url,0, play-17, 17, 1.5s);
+@include createSprite("player","attack",$attack-url,0, play-12, 12);
 @include createSprite("player","death", $death-url,0, play-11, 11);
 
 
@@ -124,4 +124,4 @@ $idle-url: "img/idle.png";
 @include genFrames(5);
 @include genFrames(6);
 @include genFrames(11);
-@include genFrames(17);
+@include genFrames(12);

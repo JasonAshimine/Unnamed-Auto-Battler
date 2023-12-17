@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
             case 'buyTier': return handleTier();
             case 'endTurn': return hanldeEndTurn();
             case 'retireModal': return showModal('#retireModal');
-            case 'retire': dismissModal(fetchHandler('api/retire/'));
+            case 'retire': return handleRetire();
             case 'dismiss': return dismissModal();
         }
     });
@@ -37,9 +37,15 @@ function dismissModal(){
 handlers
 */
 
-async function hanldeEndTurn(){
+async function handleRetire(){
+    await fetchHandler('api/retire/');
+    dismissModal();
     resetCombat();
+}
+
+async function hanldeEndTurn(){
     const data = await fetchHandler('api/endTurn/');
+    onCombatEnter();
 }
 
 async function handleTier(){
@@ -129,25 +135,7 @@ function updateCreature(serverData){
     const {items, ...data} = serverData;
 
     updateElement(data, document.querySelector('#creature .data'));
-    
-
-    //updateList(items, document.querySelector(`#creature [name=items]`))
-    parent = document.querySelector("#creature .list");
-    children = [...parent.children]
-
-    items.forEach((item, index) => {
-        node = children[index];
-        if(node.dataset.id == item.id){
-            let element = node.querySelector('[name=count]');
-            let count = element.textContent;
-            element.textContent = item.count;            
-        }
-        else{
-            element = getItemClone(item);
-            node.before(element);
-            element.classList.add('glow');
-        }
-    });
+    updateList(items, document.querySelector(`#creature [name=items]`));    
 }
 
 function updateList(list, parent, isBuy){
@@ -164,6 +152,10 @@ function getItemClone(item, isBuy, index){
         e.setAttribute("class", item.type.icon);
         e.setAttribute("title", item.type.name);
     });
+
+    if(item.count){
+        element.querySelector('[name=count]').textContent = item.count
+    }
 
     const button = element.querySelector('button');
     if(isBuy){

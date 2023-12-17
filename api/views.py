@@ -166,9 +166,8 @@ def end_update_player(player, winner):
 @login_required
 @require_POST
 def retire(request):
-    request.user.player.creature.delete()
-    request.user.player.data.delete()
-    create_game_data(request.user.player)
+    reset(request.user.player)
+    request.session[SESSION_STATE] = DEFAULT_STATE
     return JsonUserResponse(request)
 
 # ---------------------------------------

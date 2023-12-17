@@ -178,7 +178,7 @@
   background-image: url("img/attack.png");
   background-repeat: no-repeat;
   transform: scale(3);
-  animation: play-17 calc(1.5s / var(--speed)) steps(17);
+  animation: play-12 calc(0.8s / var(--speed)) steps(12);
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
@@ -558,12 +558,30 @@
     background-position-x: -704px;
   }
 }
-@keyframes play-17 {
+@keyframes play-12 {
   from {
     background-position-x: 0;
   }
   to {
-    background-position-x: -1088px;
+    background-position-x: -768px;
+  }
+}
+.fadeout {
+  animation: damage forwards ease-in-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes damage {
+  from {
+    opacity: 0;
+    top: 20%;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
   }
 }
 :root {
