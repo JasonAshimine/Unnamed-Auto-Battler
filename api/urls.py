@@ -10,6 +10,8 @@ urlpatterns = [
     path("endTurn/", views.end_draft, name="end_turn"),
     path("endCombat/", views.end_combat, name="end_combat"),
 
+    path("retire/", views.retire, name='retire'),
+
     # test
     path("combat/", views.combat, name='combat'),
 

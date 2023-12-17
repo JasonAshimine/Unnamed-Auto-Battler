@@ -65,6 +65,9 @@ def get_session_data(request):
     return None
 
 def get_full_user_data(request):
+    if request.user.player is None:
+        setup(request.user)
+
     user_data = request.user.player.serialize()
     user_data['state'] = request.session.get(SESSION_STATE, DEFAULT_STATE)
 
@@ -84,10 +87,6 @@ def JsonUserResponse(request, data = None):
 
 def JsonModelResponse(list):
     return JsonResponse([item.serialize() for item in list], safe=False)
-
-def draft(request): # list
-    request.user.player.new_store_list()
-    return JsonModelResponse(request.user.player.data.store_list.all())
 
 @login_required
 @require_POST
@@ -164,6 +163,14 @@ def end_update_player(player, winner):
     data.new_store_list()
     data.save()
 
+@login_required
+@require_POST
+def retire(request):
+    request.user.player.creature.delete()
+    request.user.player.data.delete()
+    create_game_data(request.user.player)
+    return JsonUserResponse(request)
+
 # ---------------------------------------
 # Server
 
@@ -209,6 +216,7 @@ def enemy(request):
 def opponent(request, tier):
     return JsonResponse(CombatList.get_opponent(tier).serialize())
 
+
 # ---------------------------------------
 # Player Setup
 
@@ -225,10 +233,12 @@ def setup(user):
 
 def create_player(user):
     player = Player.objects.create(name=user.username)
+    create_game_data(player)
+    
+
+def create_game_data(player):
     Creature.objects.create(player=player, **START_CREATURE)
     data = GameData.objects.create(player=player,**START_GAME_DATA)
-        
-    user.player = player
-    user.save()
 
     data.new_store_list()
+    data.save()

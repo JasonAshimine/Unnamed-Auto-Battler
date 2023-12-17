@@ -1,8 +1,13 @@
+var _isModal = false;
+
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('click', event => {
         if(event.target.id == "error")
             return event.target.textContent = '';
 
+        if(_isModal & event.target.classList.contains('modal'))
+            return dismissModal();
+            
         if(event.target.nodeName !== 'BUTTON')
             return;
 
@@ -11,11 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
             case 'reroll': return handleReroll();
             case 'buyTier': return handleTier();
             case 'endTurn': return hanldeEndTurn();
+            case 'retireModal': return showModal('#retireModal');
+            case 'retire': dismissModal(fetchHandler('api/retire/'));
+            case 'dismiss': return dismissModal();
         }
     });
 });
 
+function showModal(query){
+    document.querySelector('#retireModal').style.display = 'block';
+    _isModal = true;
+}
 
+function dismissModal(){ 
+    document.querySelectorAll('.modal').forEach(e => e.style.display = 'none'); 
+    _isModal = false;
+}
 
 /* ------------------------------------------------------
 handlers
@@ -105,7 +121,7 @@ function updateData(serverData){
     if(data.tier >= 6)
         document.querySelector('#tier-button').disabled = true;
 
-    updateElement(data, document.querySelector('#data .data'));
+    updateElement(data, document.querySelector('#data'));
     updateList(store_list, document.querySelector(`#data .list`), true)
 }
 

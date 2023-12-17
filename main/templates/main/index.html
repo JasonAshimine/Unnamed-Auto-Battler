@@ -5,7 +5,11 @@
 <div id="error" class="alert alert-danger hidden"></div>
 
 <div id="game" data-state="{{state}}">
-    <h2 class="title">{{state}}</h2>
+    <div class="d-flex justify-content-between">
+        <h2 class="title">{{state}}</h2>
+        <button class="btn btn-danger btn-sm" name="retireModal">Retire</button>
+    </div>
+    
     <div id="combat">
         {% include 'main/combat.html' %}
     </div>
@@ -22,6 +26,28 @@
         <a href="{% url 'login' %}">Please Login</a>
 
     {% endif %}
+</div>
+
+
+
+<div class="modal modal-backdrop" tabindex="-1" role="dialog" id="retireModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Retire</h5>
+            <button type="button" class="close" name="dismiss" aria-label="Close">
+                &times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>Retire Run. Will lose all progress.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" name="retire">Yes</button>
+            <button type="button" class="btn btn-secondary" name="dismiss">Close</button>
+        </div>
+      </div>
+    </div>
 </div>
 
 <template id="item">

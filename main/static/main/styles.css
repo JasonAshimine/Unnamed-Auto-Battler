@@ -589,6 +589,10 @@
   content: "x";
 }
 
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 #game[data-state=combat] #data {
   display: none;
 }

@@ -122,6 +122,7 @@ async function animateCombatRound(roundData){
 
 function idleSprite(element){
     element.dataset.type = 'idle';
+    resetSprite(element);
 }
 
 function resetSprite(element){
