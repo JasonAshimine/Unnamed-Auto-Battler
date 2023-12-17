@@ -58,14 +58,15 @@ def reset(player):
 # ---------------------------------------
 # draft 
 def get_session_data(request):
-    if request.session.get(SESSION_STATE, None) == STATE_COMBAT:
+    state = request.session.get(SESSION_STATE, None)
+    if state == STATE_COMBAT:
         return request.session.get(SESSION_COMBAT_LOG, None)
     
     return None
 
 def get_full_user_data(request):
     user_data = request.user.player.serialize()
-    user_data['state'] = request.session.get(SESSION_STATE, None)
+    user_data['state'] = request.session.get(SESSION_STATE, DEFAULT_STATE)
 
     session_data = get_session_data(request)
     if session_data:

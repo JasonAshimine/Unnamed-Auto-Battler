@@ -1,9 +1,12 @@
 <div class="d-flex flex-column" data-state="wait">
-    <div class="d-flex justify-content-center">mulit</div>
     <div class="d-flex justify-content-center">        
         {% include 'main/sprite.html' with tag='player' creature=creature type='user' %}
-        {% include 'main/sprite.html' with tag='bones' creature=enemy type='enemy' %}
+        {% if user.is_authenticated%}
+            {% include 'main/sprite.html' with tag='bones' creature=enemy type='enemy' %}
+        {% endif %}
     </div>
+
+    {% if user.is_authenticated%}
     <div class="d-flex justify-content-center" id="combat-buttons">
         <button class="btn btn-primary mr-2" id="start-combat">Play</button>
         <div class="btn-group" id="speed">            
@@ -15,4 +18,5 @@
         </div>
         <button class="btn btn-danger ml-2" id="end-combat">End</button>
     </div>
+    {% endif %}
 </div>

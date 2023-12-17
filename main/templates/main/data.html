@@ -1,31 +1,35 @@
 
 <div class="card">
     <div class="data">
-        <div class="card-body">
-            <div>
-                <i class="round-icon" title="Round"></i><d name="round">{{data.round}}</d> 
-                <i class="win-icon" title="Wins"></i><d name="wins">{{data.wins}}</d> 
-                <i class="loss-icon" title="Loss"></i><d name="loss">{{data.loss}}</d></div>
-            <div>
-                <i class="tier-icon" title="Tier"></i> <d name="tier">{{data.tier}}</d> 
-                <i class="cost-icon" title="Cost"></i> <d name="tier_cost">{{data.tier_cost}}</d>
-            </div>
-        </div>
         <div class="card-body d-flex justify-content-between">
             <div>
-                <h3><d name="gold">{{data.gold}}</d><i class="gold-icon" title="Gold"></i></h3>
+                <d name="round">{{data.round}}</d> <i class="round-icon" title="Round"></i>
+                <d name="wins">{{data.wins}}</d><i class="win-icon" title="Wins"></i> 
+                <d name="loss">{{data.loss}}</d><i class="loss-icon" title="Loss"></i>
             </div>
-        
-            <div class="btn-group draft" >
-                <button class="btn btn-primary btn-sm" name="reroll" width="50">reroll</button>
+            
+            <div>
+                <d name="tier">{{data.tier}}</d> <i class="tier-icon" title="Tier" id="tier-button"></i> 
+                <d name="tier_cost">{{data.tier_cost}}</d> <i class="cost-icon" title="Cost"></i> 
                 <button class="btn btn-primary btn-sm" name="buyTier">tier</button>
+            </div>
 
+            <div>                
                 <button class="btn btn-danger btn-sm" name="endTurn">end</button>
             </div>
+                    
         </div>
     </div>
     
     <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3><d name="gold">{{data.gold}}</d><i class="gold-icon" title="Gold"></i></h3>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-sm" name="reroll" width="50">reroll</button>                
+            </div>            
+        </div>
         <div class="list row" name="store_list">
             {% for item in data.store_list %}
                 {% include 'main/item.html' with item=item buy=True index=forloop.counter%}

@@ -52,6 +52,9 @@ $dmg-speed: 1s;
     animation: show 1s forwards;
 }
 
+.title{
+    text-transform: capitalize;
+}
 
 #combat #speed button::before{
     content:'x'attr(data-speed);

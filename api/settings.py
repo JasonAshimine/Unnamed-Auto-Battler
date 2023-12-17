@@ -18,6 +18,8 @@ SESSION_COMBAT_LOG = 'combat_log'
 STATE_COMBAT = 'combat'
 STATE_DRAFT = 'draft'
 
+DEFAULT_STATE = STATE_DRAFT
+
 # -------------------------------------
 # Draft
 

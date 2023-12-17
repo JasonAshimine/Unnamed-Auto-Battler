@@ -50,8 +50,8 @@ function genSpriteConst(obj, parentQuery){
 function setSpeed(val){  document.documentElement.style.setProperty('--speed', val); }
 function handleSpeedClick(element){
     setSpeed(element.dataset.speed);
-    document.querySelectorAll('#speed button').forEach(e => e.classList.remove('active'));
-    element.classList.add('.active');
+    document.querySelectorAll('#speed .active').forEach(e => e.classList.remove('active'));
+    element.classList.add('active');
 }
 
 /* -----------------------------------------
@@ -67,7 +67,8 @@ async function endCombat(){
         SPRITE_ENEMY.element.classList.add('hide');
     });
 
-    return fetchHandler('/api/endCombat/').then(() => resetCombat());
+    await fetchHandler('/api/endCombat/');
+    resetCombat();
 }
 
 
@@ -77,12 +78,16 @@ async function startCombat(){
 
     console.log(data);
 
+    resetCombat();
+
     SPRITE_ENEMY.maxHP = data.enemy.health;
     SPRITE_USER.maxHP = data.creature.health;
 
     for(item of data.combat_log){
         await animateCombatRound(item);
-    }    
+    }
+
+    document.querySelector('#combat').dataset.state = 'wait';
 }
 
 function determineTarget(target){
@@ -164,6 +169,11 @@ function percentage(partialValue, totalValue) {
 }
 
 function resetCombat(){
+    console.log('reset');
+
+    SPRITE_ENEMY.hp.style.width = '100%';
+    SPRITE_USER.hp.style.width = '100%';
+
     idleSprite(SPRITE_ENEMY.sprite);
     idleSprite(SPRITE_USER.sprite);
     SPRITE_ENEMY.element.classList.remove('hide');

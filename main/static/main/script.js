@@ -85,20 +85,25 @@ function fetchCSRF(url = '', data = {}, option = {}){
 Update
 */
 function updateAll(serverData){
-    const {name, data, creature, state}  = serverData;
+    const {name, data, creature, enemy, state}  = serverData;
     document.querySelector('#game').dataset.state = state;
+    document.querySelector('#game .title').textContent = state;
 
-    updateCombat(data);
+    updateCombat(creature, enemy);
     updateData(data);
     updateCreature(creature);
 }
 
-function updateCombat(data){
-
+function updateCombat(user, enemy){
+    updateElement(user, document.querySelector('#combat .user'));
+    updateElement(enemy, document.querySelector('#combat .enemy'));
 }
 
 function updateData(serverData){
     const {store_list, ...data} = serverData;
+
+    if(data.tier >= 6)
+        document.querySelector('#tier-button').disabled = true;
 
     updateElement(data, document.querySelector('#data .data'));
     updateList(store_list, document.querySelector(`#data .list`), true)
@@ -160,6 +165,6 @@ function getItemClone(item, isBuy, index){
 function updateElement(data, parent = document){
     const update = ([key,value]) => parent.querySelectorAll(`[name=${key}] `).forEach(element => element.textContent=value)
 
-    if(parent)
+    if(parent && data)
         Object.entries(data).forEach(update);
 }

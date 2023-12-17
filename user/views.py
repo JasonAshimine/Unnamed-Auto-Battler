@@ -1,9 +1,10 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+
+
 
 def login_view(request):
     if request.method == "POST":
@@ -31,7 +32,6 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -46,8 +46,10 @@ def register(request):
             })
 
         # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
+        try:            
+            User = get_user_model()
+            user = User.objects.create_user(username=username, email=email, password=password)
+            
             user.save()
         except IntegrityError:
             return render(request, "main/register.html", {
