@@ -2,7 +2,6 @@
 
 ## Distinctiveness and Complexity
 Originally designed for allow RESTful autobattler game inspired by "Super Auto Pets" with multiplayer by storing users at their round and resending as opponent to next player.
-Unfortunately, project feature creep grew too much for available time and mulitplayer feature was cut for random enemies.
 
  - Created a web based auto battler game.
  - Animated Pixel sprites / combat with event based sequencing.
